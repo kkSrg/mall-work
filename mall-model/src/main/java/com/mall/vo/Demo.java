@@ -1,4 +1,4 @@
-package com.mall;
+package com.mall.vo;
 
 public class Demo {
 }

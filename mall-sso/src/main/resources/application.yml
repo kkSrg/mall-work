@@ -1,0 +1,17 @@
+server:
+  port: 18081
+spring:
+  application:
+    name: mall-sso
+  cloud:
+    nacos:
+      server-addr: 192.168.136.160:8848
+
+dubbo:
+  registry:
+    address: spring-cloud://locahost
+  scan:
+    base-packages: com.mall.service
+  protocol:
+    port: 20882
+    name: dubbo
