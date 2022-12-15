@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="mall-dubbo" />
+        <module name="mall-model" />
+        <module name="mall-dubbo-interface" />
+        <module name="mall-admin" />
+        <module name="mall-sso" />
+        <module name="mall-dubbo-db" />
+        <module name="mall-commons" />
+        <module name="mall-geteway" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>
