@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>mall-dubbo</artifactId>
+    <packaging>pom</packaging>
     <modules>
         <module>mall-dubbo-db</module>
         <module>mall-dubbo-interface</module>

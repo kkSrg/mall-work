@@ -15,6 +15,7 @@
         <module>mall-model</module>
         <module>mall-admin</module>
         <module>mall-sso</module>
+        <module>mall-dubbo</module>
     </modules>
 
     <properties>
