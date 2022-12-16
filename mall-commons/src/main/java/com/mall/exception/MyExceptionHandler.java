@@ -20,8 +20,8 @@ public class MyExceptionHandler {
     }
 
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity exception(Exception exception){
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("未知异常");
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity exception(Exception exception){
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("未知异常");
+//    }
 }
