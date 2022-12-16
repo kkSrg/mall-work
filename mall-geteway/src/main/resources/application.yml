@@ -12,9 +12,9 @@ spring:
         - id: mall-sso
           uri: lb://mall-sso
           predicates:
-            - Path=
+            - Path= /admin/login
 
         - id: mall-admin
           uri: lb://mall-admin
           predicates:
-            - Path= /brand/**
+            - Path= /role/**
