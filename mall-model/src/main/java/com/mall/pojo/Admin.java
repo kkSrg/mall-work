@@ -5,10 +5,12 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * 用户
@@ -60,12 +62,14 @@ public class Admin implements Serializable {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 
     /**
      * 最后登录时间
      */
-    private LocalDateTime loginTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date loginTime;
 
     /**
      * 帐号启用状态：0->禁用；1->启用
