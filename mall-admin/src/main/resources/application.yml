@@ -2,7 +2,7 @@ server:
   port: 18083
 spring:
   application:
-    name: tanhua-app
+    name: mall-admin
   cloud:
     nacos:
       server-addr: 192.168.136.160:8848

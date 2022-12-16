@@ -4,33 +4,30 @@ spring:
   application:
     name: mall-gateway
   cloud:
+    #nacos配置
     nacos:
-      server-addr: 192.168.136.160:8848
-    #网关路由的配置
+      discovery:
+        server-addr: 192.168.136.160:8848
+    #网关路由配置
     gateway:
-      globalcors:
-        add-to-simple-url-handler-mapping: true
+      routes:
+        - id: mall-admin
+          uri: lb://mall-admin
+          predicates:
+           - Path= /admin/**
+          #filters: StripPrefix=1  # 前缀， 在当前路径匹配中表示去掉第一个前缀
+      globalcors: # 全局的跨域处理
+        add-to-simple-url-handler-mapping: true # 解决options请求被拦截问题
         corsConfigurations:
           '[/**]':
-            allowedHeaders: "*"
-            allowedOrigins: "*"
-            allowedMethods:
+            allowedOrigins: "*" # 允许哪些网站的跨域请求
+            #- "http://192.168.200.125"
+            allowedMethods: # 允许的跨域ajax的请求方式
               - GET
               - POST
               - DELETE
               - PUT
               - OPTION
-      routes:
-        - id: mall-sso
-          uri: lb://mall-sso
-          predicates:
-            - Path= /admin/login
-          filters:
-            - StripPrefix= 1
-
-        - id: mall-admin
-          uri: lb://mall-admin
-          predicates:
-            - Path= /role/**
-gateway:
-  excludedUrls: /admin/login
+            allowedHeaders: "*" # 允许在请求中携带的头信息
+            #allowCredentials: true # 是否允许携带cookie
+            #maxAge: 360000 # 这次跨域检测的有效期
