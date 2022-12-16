@@ -3,9 +3,13 @@ package com.mall.pojo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  *  秒杀活动表
@@ -17,7 +21,7 @@ import java.time.LocalDateTime;
 
 @Data
 @TableName("sms_flash_promotion")
-public class SmsFlashPromotion {
+public class SmsFlashPromotion implements Serializable {
 
 
     /**
@@ -34,12 +38,14 @@ public class SmsFlashPromotion {
     /**
      * 开始日期
      */
-    private LocalDateTime startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date startDate;
 
     /**
      * 结束日期
      */
-    private LocalDateTime endDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date endDate;
 
 
     /**
@@ -51,7 +57,8 @@ public class SmsFlashPromotion {
     /**
      * 秒杀时间段名称
      */
-    private LocalDateTime createTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date createTime;
 
 
 }

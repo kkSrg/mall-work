@@ -11,7 +11,7 @@ import java.text.DateFormat;
 import java.time.LocalDateTime;
 
 /**
- * 用户
+ * 用户表
  *
  * @author 吴一飞
  * @date 2022/12/15 21:21
