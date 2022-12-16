@@ -28,8 +28,10 @@ public class PmsBrandService {
         CommonPage<PmsBrand> result = new CommonPage<>();
         result.setPageNum(pageNum);
         result.setPageSize(pageSize);
-        result.setTotalPage(1);
-        result.setTotal(10);
+        Integer total = pmsBrandApi.selectCount();
+        Integer totalPage = (int) (total / pageSize + ((total % pageSize == 0) ? 0 : 1));
+        result.setTotalPage(totalPage);
+        result.setTotal(total);
         List<PmsBrand> list = pmsBrandApi.findAllBrands();
         result.setList(list);
         return result;

@@ -6,7 +6,6 @@ import com.mall.CommonResult;
 import com.mall.admin.service.PmsBrandService;
 import com.mall.pojo.PmsBrand;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,10 +24,10 @@ public class PmsBrandController {
      * @return
      */
     @GetMapping("/list")
-    public ResponseEntity<CommonPage<PmsBrand>> list(@RequestParam(value = "pageNum",required = false,defaultValue = "1") Integer pageNum,
+    public CommonResult<CommonPage<PmsBrand>> list(@RequestParam(value = "pageNum",required = false,defaultValue = "1") Integer pageNum,
                                                      @RequestParam(value = "pageSize",required = false,defaultValue = "10")Integer pageSize){
         CommonPage<PmsBrand> result = pmsBrandService.list(pageNum,pageSize);
-        return ResponseEntity.ok(result);
+        return CommonResult.success(result);
     }
 
     /**

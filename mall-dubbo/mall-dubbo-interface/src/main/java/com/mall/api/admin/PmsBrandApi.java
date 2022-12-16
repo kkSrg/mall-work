@@ -29,4 +29,8 @@ public interface PmsBrandApi {
 
     //更新品牌
     Boolean updateById(Long toLong, PmsBrand pmsBrandParam);
+
+    //数据总条数
+    Integer selectCount();
+
 }

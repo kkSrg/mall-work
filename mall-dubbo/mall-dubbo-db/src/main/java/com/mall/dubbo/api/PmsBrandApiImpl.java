@@ -88,8 +88,16 @@ public class PmsBrandApiImpl implements PmsBrandApi {
         PmsBrand brand = new PmsBrand();
         brand.setId(id);
         BeanUtil.copyProperties(pmsBrandParam,brand,"id");
+        LambdaQueryWrapper<PmsBrand> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(PmsBrand::getId,id);
+        int count = pmsBrandMapper.update(brand, queryWrapper);
+        return count != 0;
+    }
 
-        return null;
+    //数据总条数
+    @Override
+    public Integer selectCount() {
+        return pmsBrandMapper.selectCount(null);
     }
 
 
