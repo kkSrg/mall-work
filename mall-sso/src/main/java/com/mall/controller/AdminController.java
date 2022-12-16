@@ -34,16 +34,16 @@ public class AdminController {
      * @return
      */
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody UmsAdminLoginParam umsAdminLoginParam){
+    public ResponseEntity<String> login(@RequestBody UmsAdminLoginParam umsAdminLoginParam){
         try {
             //获取用户密码
             String username = umsAdminLoginParam.getUsername();
             String password = umsAdminLoginParam.getPassword();
 
             //请求service方法
-            adminService.login(username,password);
+            String token = adminService.login(username, password);
 
-            return ResponseEntity.ok(null);
+            return ResponseEntity.ok(token);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
