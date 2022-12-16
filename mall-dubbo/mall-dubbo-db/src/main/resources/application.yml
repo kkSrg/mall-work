@@ -2,7 +2,7 @@ server:
   port: 18082
 spring:
   application:
-    name: dubbo-db
+    name: mall-dubbo-db
   cloud:
     nacos:
       server-addr: 192.168.136.160:8848

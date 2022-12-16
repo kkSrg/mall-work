@@ -31,7 +31,7 @@
       <module name="mall-geteway" options="-parameters" />
       <module name="mall-model" options="-parameters" />
       <module name="mall-sso" options="-parameters" />
-      <module name="mall-work" options="" />
+      <module name="mall-work" options="-parameters" />
     </option>
   </component>
 </project>

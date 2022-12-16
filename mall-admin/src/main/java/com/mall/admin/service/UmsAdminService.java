@@ -4,11 +4,15 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.mall.CommonPage;
 import com.mall.api.admin.UmsAdminApi;
+import com.mall.dto.UmsAdminParam;
+import com.mall.exception.ConsumerException;
 import com.mall.pojo.Admin;
+import com.mall.utils.AppJwtUtil;
 import com.mall.vo.AdminVo;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.checkerframework.checker.units.qual.C;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -21,6 +25,29 @@ public class UmsAdminService {
     @DubboReference
     private UmsAdminApi umsAdminApi;
 
+
+    /**
+     * 登录功能
+     */
+    public String login(String username, String password){
+
+        //将密码加密
+        //  String encryptedPwd = MyMD5Util.getEncryptedPwd(password);
+        String encryptedPwd = DigestUtils.md5DigestAsHex(password.getBytes());
+
+        //查询数据库
+        Admin admin = umsAdminApi.login(username,encryptedPwd);
+
+
+        if (admin == null){
+            //用户名密码错误!!
+            throw new ConsumerException("验证输入错误！");
+        }else {
+            //生成token
+            String token = AppJwtUtil.getToken(admin.getId());
+            return token;
+        }
+    }
 
     /**
      * 根据用户名或姓名分页获取用户列表
@@ -45,5 +72,13 @@ public class UmsAdminService {
         listPage.setTotal(adminVoList.size());
         listPage.setTotalPage((int) (adminVoList.size() / pagesize + ((adminVoList.size() % pagesize == 0) ? 0 : 1)));
         return listPage;
+    }
+
+    /**
+     * 用户注册
+     * @param umsAdminParam
+     */
+    public Admin register(UmsAdminParam umsAdminParam) {
+        return null;
     }
 }

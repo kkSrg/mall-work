@@ -15,12 +15,12 @@ public class CommonResult<T> implements Serializable {
 
     private T data; //数据
 
-    private Map map = new HashMap(); //动态数据
 
     public static <T> CommonResult<T> success(T object) {
         CommonResult<T> r = new CommonResult<T>();
         r.data = object;
-        r.code = 0;
+        r.code = 200;
+        r.message="操作成功";
         return r;
     }
 
@@ -31,9 +31,5 @@ public class CommonResult<T> implements Serializable {
         return r;
     }
 
-    public CommonResult<T> add(String key, Object value) {
-        this.map.put(key, value);
-        return this;
-    }
 
 }

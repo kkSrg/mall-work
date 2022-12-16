@@ -18,6 +18,17 @@ public class UmsAdminApiImpl implements UmsAdminApi {
     @Autowired
     private UmsAdminMapper umsAdminMapper;
 
+    /**
+     * 登录功能
+     */
+    @Override
+    public Admin login(String username, String password) {
+        LambdaQueryWrapper<Admin> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Admin::getUsername,username).eq(Admin::getPassword,password);
+
+        return umsAdminMapper.selectOne(wrapper);
+    }
+
     @Override
     public List<Admin> findAll(String keyword, Integer page, Integer pagesize) {
         //创建分页对象，设置分页参数
