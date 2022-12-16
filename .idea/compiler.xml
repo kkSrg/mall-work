@@ -10,16 +10,20 @@
         <module name="mall-model" />
         <module name="mall-admin" />
         <module name="mall-dubbo-interface" />
-        <module name="mall-sso" />
+        <module name="mall-autoconfig" />
         <module name="mall-commons" />
         <module name="mall-geteway" />
         <module name="mall-dubbo-db" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="mall-sso" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="mall-admin" options="-parameters" />
+      <module name="mall-autoconfig" options="-parameters" />
       <module name="mall-commons" options="-parameters" />
       <module name="mall-dubbo" options="" />
       <module name="mall-dubbo-db" options="-parameters" />

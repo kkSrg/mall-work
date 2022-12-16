@@ -2,13 +2,18 @@ server:
   port: 18083
 spring:
   application:
-    name: tanhua-app
+    name: mall-admin
   cloud:
     nacos:
       server-addr: 192.168.136.160:8848
   redis:
     port: 6379
     host: 192.168.136.160
+  #允许文件上传的大小
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
 dubbo:
   registry:
     address: spring-cloud://locahost
@@ -17,6 +22,11 @@ dubbo:
   protocol:
     port: 20883
     name: dubbo
-
-
-
+#oss对象存储配置
+mall:
+  oss:
+    accessKey: LTAI5tHM7XXf2MufMxWGB7Xu
+    secret: R99Yo2JkGvjqCY8CGVwgrfccC2Xufr
+    endpoint: oss-cn-hangzhou.aliyuncs.com
+    bucketName: wxctanhua
+    url: https://wxctanhua.oss-cn-hangzhou.aliyuncs.com
