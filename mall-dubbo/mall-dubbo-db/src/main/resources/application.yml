@@ -27,6 +27,6 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
-      table-prefix: ums_
+      table-prefix:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
