@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 18085
 spring:
   application:
     name: mall-gateway
@@ -17,4 +17,4 @@ spring:
         - id: mall-admin
           uri: lb://mall-admin
           predicates:
-            - Path=
+            - Path= /role/**

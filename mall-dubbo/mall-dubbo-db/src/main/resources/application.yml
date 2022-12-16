@@ -9,7 +9,7 @@ spring:
   # 数据源配置
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql:///tanhua?useSSL=false
+    url: jdbc:mysql:///mall?useSSL=false
     username: root
     password: 123456
 
@@ -27,6 +27,6 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
-      table-prefix: tb_
+      table-prefix:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
