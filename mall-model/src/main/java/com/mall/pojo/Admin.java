@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.time.LocalDateTime;
 
 /**
  * 用户
@@ -23,7 +24,7 @@ public class Admin implements Serializable {
     /**
      * 主键id
      */
-    @TableId(type = IdType.ASSIGN_ID) //指定主键使用雪花算法
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
@@ -59,12 +60,12 @@ public class Admin implements Serializable {
     /**
      * 创建时间
      */
-    private DateFormat createTime;
+    private LocalDateTime createTime;
 
     /**
      * 最后登录时间
      */
-    private DateFormat loginTime;
+    private LocalDateTime loginTime;
 
     /**
      * 帐号启用状态：0->禁用；1->启用
