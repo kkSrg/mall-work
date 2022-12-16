@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 18085
 spring:
   application:
     name: mall-gateway
@@ -12,7 +12,7 @@ spring:
         - id: mall-sso
           uri: lb://mall-sso
           predicates:
-            - Path=
+            - Path= /admin/login
 
         - id: mall-admin
           uri: lb://mall-admin
