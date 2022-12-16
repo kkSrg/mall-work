@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class PageResult<T> {
+public class CommonPage<T> {
     private Integer pageNum;  //当前页码
     private Integer pageSize;  //页大小
     private Integer totalPage;  //总页数

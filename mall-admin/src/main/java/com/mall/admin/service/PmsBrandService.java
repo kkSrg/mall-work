@@ -1,14 +1,13 @@
 package com.mall.admin.service;
 
 import cn.hutool.core.convert.Convert;
-import com.mall.PageResult;
+import com.mall.CommonPage;
 import com.mall.api.admin.PmsBrandApi;
 import com.mall.exception.ConsumerException;
 import com.mall.pojo.PmsBrand;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,8 +24,8 @@ public class PmsBrandService {
      * @param pageSize
      * @return
      */
-    public PageResult<PmsBrand> list(Integer pageNum, Integer pageSize) {
-        PageResult<PmsBrand> result = new PageResult<>();
+    public CommonPage<PmsBrand> list(Integer pageNum, Integer pageSize) {
+        CommonPage<PmsBrand> result = new CommonPage<>();
         result.setPageNum(pageNum);
         result.setPageSize(pageSize);
         result.setTotalPage(1);
@@ -96,9 +95,30 @@ public class PmsBrandService {
         List<Long> idList = ids.stream().map(id -> {
             return Convert.toLong(id);
         }).collect(Collectors.toList());
-        Boolean flag = pmsBrandApi.updateFactoryStatus(factoryStatus,idList);
+        pmsBrandApi.updateFactoryStatus(factoryStatus,idList);
+    }
+
+    /**
+     * 8.批量更新显示状态
+     * @return
+     */
+    public void updateShowStatus(Integer showStatus, List<Integer> ids) {
+        List<Long> idList = ids.stream().map(id -> {
+            return Convert.toLong(id);
+        }).collect(Collectors.toList());
+        pmsBrandApi.updateShowStatus(showStatus,idList);
+    }
+
+    /**
+     * 9.更新品牌
+     * @param id
+     * @param pmsBrandParam
+     * @return
+     */
+    public void updateById(Integer id, PmsBrand pmsBrandParam) {
+        Boolean flag = pmsBrandApi.updateById(Convert.toLong(id),pmsBrandParam);
         if (!flag){
-            throw new ConsumerException("批量更新厂家制造商状态失败");
+            throw new ConsumerException("品牌信息修改失败");
         }
     }
 }

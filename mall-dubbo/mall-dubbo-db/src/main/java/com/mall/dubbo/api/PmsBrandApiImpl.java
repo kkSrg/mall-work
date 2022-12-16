@@ -1,5 +1,6 @@
 package com.mall.dubbo.api;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.convert.Convert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.mall.api.admin.PmsBrandApi;
@@ -55,17 +56,38 @@ public class PmsBrandApiImpl implements PmsBrandApi {
 
     //批量更新厂家制造商状态
     @Override
-    public Boolean updateFactoryStatus(Integer factoryStatus, List<Long> idList) {
+    public void updateFactoryStatus(Integer factoryStatus, List<Long> idList) {
         LambdaQueryWrapper<PmsBrand> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.in(PmsBrand::getId,idList);
         List<PmsBrand> brandList = pmsBrandMapper.selectList(queryWrapper);
-        brandList.stream().map(brand -> {
+        for (PmsBrand brand : brandList) {
             brand.setFactoryStatus(factoryStatus);
             LambdaQueryWrapper<PmsBrand> queryWrapper1 = new LambdaQueryWrapper<>();
             queryWrapper1.eq(PmsBrand::getId,brand.getId());
             pmsBrandMapper.update(brand,queryWrapper1);
-            return brand;
-        }).collect(Collectors.toList());
+        }
+    }
+
+    //批量更新显示状态
+    @Override
+    public void updateShowStatus(Integer showStatus, List<Long> idList) {
+        LambdaQueryWrapper<PmsBrand> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(PmsBrand::getId,idList);
+        List<PmsBrand> brandList = pmsBrandMapper.selectList(queryWrapper);
+        for (PmsBrand brand : brandList) {
+            brand.setShowStatus(showStatus);
+            LambdaQueryWrapper<PmsBrand> queryWrapper1 = new LambdaQueryWrapper<>();
+            queryWrapper1.eq(PmsBrand::getId,brand.getId());
+            pmsBrandMapper.update(brand,queryWrapper1);
+        }
+    }
+
+    //更新品牌
+    @Override
+    public Boolean updateById(Long id, PmsBrand pmsBrandParam) {
+        PmsBrand brand = new PmsBrand();
+        brand.setId(id);
+        BeanUtil.copyProperties(pmsBrandParam,brand,"id");
 
         return null;
     }

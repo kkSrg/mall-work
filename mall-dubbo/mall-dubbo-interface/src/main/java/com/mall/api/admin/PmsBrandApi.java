@@ -22,5 +22,11 @@ public interface PmsBrandApi {
     PmsBrand getMsgById(Long id);
 
     //批量更新厂家制造商状态
-    Boolean updateFactoryStatus(Integer factoryStatus, List<Long> idList);
+    void updateFactoryStatus(Integer factoryStatus, List<Long> idList);
+
+    //批量更新显示状态
+    void updateShowStatus(Integer showStatus, List<Long> idList);
+
+    //更新品牌
+    Boolean updateById(Long toLong, PmsBrand pmsBrandParam);
 }

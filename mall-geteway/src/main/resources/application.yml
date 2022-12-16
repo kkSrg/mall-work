@@ -17,4 +17,4 @@ spring:
         - id: mall-admin
           uri: lb://mall-admin
           predicates:
-            - Path= /role/**
+            - Path= /role/**,/brand/**
