@@ -35,7 +35,6 @@ public class AdminController {
      */
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UmsAdminLoginParam umsAdminLoginParam){
-        try {
             //获取用户密码
             String username = umsAdminLoginParam.getUsername();
             String password = umsAdminLoginParam.getPassword();
@@ -44,8 +43,5 @@ public class AdminController {
             String token = adminService.login(username, password);
 
             return ResponseEntity.ok(token);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 }

@@ -23,7 +23,7 @@ public class AdminService {
     /**
      * 登录功能
      */
-    public String login(String username, String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public String login(String username, String password){
 
         //将密码加密
       //  String encryptedPwd = MyMD5Util.getEncryptedPwd(password);
