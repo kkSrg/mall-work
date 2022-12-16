@@ -6,10 +6,7 @@ import com.mall.admin.service.UmsAdminService;
 import com.mall.pojo.Admin;
 import com.mall.vo.AdminVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("admin")
@@ -31,5 +28,11 @@ public class UmsAdminController {
                                                   @RequestParam(value = "pageSize",required = false,defaultValue = "10")Integer pagesize){
         CommonPage<AdminVo> result = umsAdminService.adminsByKw(keyword,page,pagesize);
         return CommonResult.success(result);
+    }
+
+    @PostMapping("register")
+    public CommonResult<Admin> register(){
+        Admin admin = new Admin();
+        return CommonResult.success(admin);
     }
 }
