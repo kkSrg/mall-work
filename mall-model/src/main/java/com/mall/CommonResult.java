@@ -1,9 +1,11 @@
 package com.mall;
 
+import com.mall.pojo.OmsOrder;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -15,6 +17,7 @@ public class CommonResult<T> implements Serializable {
 
     private T data; //数据
 
+    private Map map = new HashMap(); //动态数据
 
     public static <T> CommonResult<T> success(T object) {
         CommonResult<T> r = new CommonResult<T>();
@@ -31,5 +34,10 @@ public class CommonResult<T> implements Serializable {
         return r;
     }
 
+
+    public CommonResult<T> add(String key, Object value) {
+        this.map.put(key, value);
+        return this;
+    }
 
 }
