@@ -2,11 +2,13 @@ package com.mall.pojo;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 商品分类列表
  */
 @Data
-public class PmsProductCategory {
+public class PmsProductCategory implements Serializable {
 
   private long id;  //分类id(编号)
   private long parentId;  //上级分类的id
@@ -18,7 +20,7 @@ public class PmsProductCategory {
   private Integer showStatus;  //显示状态：0->不显示；1->显示
   private Integer sort;  //排序
   private String icon;  //图标
-  private String keywords;
+  private String keywords;  //关键字(数据库中与描述的数据一致)
   private String description;  //描述
 
 

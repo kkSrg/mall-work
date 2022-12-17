@@ -20,19 +20,20 @@ public class PmsBrandService {
 
     /**
      * 1.根据品牌名称分页获取品牌列表
+     * @param keyword
      * @param pageNum
      * @param pageSize
      * @return
      */
-    public CommonPage<PmsBrand> list(Integer pageNum, Integer pageSize) {
+    public CommonPage<PmsBrand> list(String keyword,Integer pageNum, Integer pageSize) {
         CommonPage<PmsBrand> result = new CommonPage<>();
         result.setPageNum(pageNum);
         result.setPageSize(pageSize);
-        Integer total = pmsBrandApi.selectCount();
+        Integer total = pmsBrandApi.selectCountByKeyWord(keyword);
         Integer totalPage = (int) (total / pageSize + ((total % pageSize == 0) ? 0 : 1));
         result.setTotalPage(totalPage);
         result.setTotal(total);
-        List<PmsBrand> list = pmsBrandApi.findAllBrands();
+        List<PmsBrand> list = pmsBrandApi.findABrandsByKeyWord(keyword);
         result.setList(list);
         return result;
     }

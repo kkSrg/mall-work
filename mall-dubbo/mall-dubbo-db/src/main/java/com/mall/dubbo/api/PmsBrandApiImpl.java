@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.mall.api.admin.PmsBrandApi;
 import com.mall.dubbo.mapper.PmsBrandMapper;
 import com.mall.pojo.PmsBrand;
+import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -94,10 +95,20 @@ public class PmsBrandApiImpl implements PmsBrandApi {
         return count != 0;
     }
 
-    //数据总条数
+    //模糊查询得到的数据总条数
     @Override
-    public Integer selectCount() {
-        return pmsBrandMapper.selectCount(null);
+    public Integer selectCountByKeyWord(String keyword) {
+        LambdaQueryWrapper<PmsBrand> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(null!= keyword,PmsBrand::getName,keyword);
+        return pmsBrandMapper.selectCount(queryWrapper);
+    }
+
+    //模糊查询得到的品牌
+    @Override
+    public List<PmsBrand> findABrandsByKeyWord(String keyword) {
+        LambdaQueryWrapper<PmsBrand> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(null!= keyword,PmsBrand::getName,keyword);
+        return pmsBrandMapper.selectList(queryWrapper);
     }
 
 

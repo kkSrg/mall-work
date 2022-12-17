@@ -3,8 +3,6 @@ package com.mall;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 @Data
 public class CommonResult<T> implements Serializable {

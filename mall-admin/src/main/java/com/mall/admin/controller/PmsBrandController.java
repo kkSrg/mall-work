@@ -24,9 +24,10 @@ public class PmsBrandController {
      * @return
      */
     @GetMapping("/list")
-    public CommonResult<CommonPage<PmsBrand>> list(@RequestParam(value = "pageNum",required = false,defaultValue = "1") Integer pageNum,
-                                                     @RequestParam(value = "pageSize",required = false,defaultValue = "10")Integer pageSize){
-        CommonPage<PmsBrand> result = pmsBrandService.list(pageNum,pageSize);
+    public CommonResult<CommonPage<PmsBrand>> list(@RequestParam String keyword,
+                                                   @RequestParam(value = "pageNum",required = false,defaultValue = "1") Integer pageNum,
+                                                   @RequestParam(value = "pageSize",required = false,defaultValue = "10")Integer pageSize){
+        CommonPage<PmsBrand> result = pmsBrandService.list(keyword,pageNum,pageSize);
         return CommonResult.success(result);
     }
 

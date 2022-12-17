@@ -25,13 +25,13 @@
       <module name="mall-admin" options="-parameters" />
       <module name="mall-autoconfig" options="-parameters" />
       <module name="mall-commons" options="-parameters" />
-      <module name="mall-dubbo" options="" />
+      <module name="mall-dubbo" options="-parameters" />
       <module name="mall-dubbo-db" options="-parameters" />
       <module name="mall-dubbo-interface" options="-parameters" />
       <module name="mall-geteway" options="-parameters" />
       <module name="mall-model" options="-parameters" />
       <module name="mall-sso" options="-parameters" />
-      <module name="mall-work" options="-parameters" />
+      <module name="mall-work" options="" />
     </option>
   </component>
 </project>
