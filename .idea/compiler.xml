@@ -25,7 +25,7 @@
       <module name="mall-admin" options="-parameters" />
       <module name="mall-autoconfig" options="-parameters" />
       <module name="mall-commons" options="-parameters" />
-      <module name="mall-dubbo" options="-parameters" />
+      <module name="mall-dubbo" options="" />
       <module name="mall-dubbo-db" options="-parameters" />
       <module name="mall-dubbo-interface" options="-parameters" />
       <module name="mall-gateway" options="-parameters" />

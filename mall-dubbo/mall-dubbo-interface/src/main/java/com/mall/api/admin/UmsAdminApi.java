@@ -8,4 +8,7 @@ public interface UmsAdminApi {
     List<Admin> findAll(String keyword, Integer page, Integer pagesize);
 
     Admin login(String username, String encryptedPwd);
+
+    //根据id查
+    Admin findById(Long id);
 }

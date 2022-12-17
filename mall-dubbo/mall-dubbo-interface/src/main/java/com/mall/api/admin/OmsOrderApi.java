@@ -10,9 +10,9 @@ import java.util.List;
 public interface OmsOrderApi {
 
 
-      int delivery(List<OmsOrderDeliveryParam> deliveryParamList);
+    int delivery(List<OmsOrderDeliveryParam> deliveryParamList);
 
-      int updateByExampleSelective(OmsOrder record, OmsOrderExample example);
+    int updateByExampleSelective(OmsOrder record, OmsOrderExample example);
 
-      List<OmsOrder> getList(OmsOrderQueryParam queryParam);
+    List<OmsOrder> getList(OmsOrderQueryParam queryParam);
 }

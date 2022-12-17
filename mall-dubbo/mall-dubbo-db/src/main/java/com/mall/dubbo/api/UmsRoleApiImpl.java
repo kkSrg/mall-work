@@ -17,9 +17,6 @@ public class UmsRoleApiImpl implements UmsRoleApi {
 
     @Override
     public List<UmsRole> findAll() {
-        LambdaQueryWrapper<UmsRole> wrapper = new LambdaQueryWrapper<>();
-        List<UmsRole> list =umsRoleMapper.selectList(wrapper);
-
-        return list;
+        return umsRoleMapper.selectList(null);
     }
 }

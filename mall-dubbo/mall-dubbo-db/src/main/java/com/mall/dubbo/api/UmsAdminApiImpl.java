@@ -30,6 +30,11 @@ public class UmsAdminApiImpl implements UmsAdminApi {
     }
 
     @Override
+    public Admin findById(Long id) {
+        return umsAdminMapper.selectById(id);
+    }
+
+    @Override
     public List<Admin> findAll(String keyword, Integer page, Integer pagesize) {
         //创建分页对象，设置分页参数
         //注意：使用分页，需要配置分页插件

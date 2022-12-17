@@ -1,6 +1,7 @@
 package com.mall.filter;
 
 import cn.hutool.core.util.StrUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -13,9 +14,12 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.net.URI;
+
 /**
  * 网关过滤器
  */
+@Slf4j
 @Component
 @Order(1)
 public class GlobalAuthFilter implements GlobalFilter {
@@ -29,6 +33,8 @@ public class GlobalAuthFilter implements GlobalFilter {
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
         //2.设置放行请求 登录和验证码校验
+        URI uri = request.getURI();
+        log.info(uri.toString());//方便观察请求路径
         if (StrUtil.equals(request.getURI().getPath(), "/admin/login")) {
             return chain.filter(exchange);
         }
