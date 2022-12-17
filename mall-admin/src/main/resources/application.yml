@@ -1,14 +1,18 @@
 server:
-  port: 18083
+  port: 18081
 spring:
   application:
     name: mall-admin
   cloud:
     nacos:
-      server-addr: 192.168.136.160:8848
-  redis:
-    port: 6379
-    host: 192.168.136.160
+      discovery:
+        server-addr: 192.168.136.160:8848
+      config:
+        server-addr: 192.168.136.160:8848
+
+#  redis:
+#    port: 6379
+#    host: 192.168.136.160
   #允许文件上传的大小
   servlet:
     multipart:
@@ -22,6 +26,8 @@ dubbo:
   protocol:
     port: 20883
     name: dubbo
+  consumer:
+    check: false    #关闭dubbo默认检查提供者是否可用（解决必须先启动提供者后启动消费者）
 #oss对象存储配置
 mall:
   oss:

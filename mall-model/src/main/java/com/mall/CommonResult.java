@@ -1,8 +1,12 @@
 package com.mall;
 
+import com.mall.pojo.OmsOrder;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Data
 public class CommonResult<T> implements Serializable {
@@ -28,6 +32,5 @@ public class CommonResult<T> implements Serializable {
         r.code = 1;
         return r;
     }
-
 
 }

@@ -5,13 +5,16 @@ spring:
     name: mall-dubbo-db
   cloud:
     nacos:
-      server-addr: 192.168.136.160:8848
+      discovery:
+        server-addr: 192.168.136.160:8848
+      config:
+        server-addr: 192.168.136.160:8848
   # 数据源配置
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql:///mall?useSSL=false
     username: root
-    password: root
+    password: 123456
 
 # dubbo配置
 dubbo:

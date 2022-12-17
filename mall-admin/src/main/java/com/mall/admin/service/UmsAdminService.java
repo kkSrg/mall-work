@@ -1,6 +1,7 @@
 package com.mall.admin.service;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
 import com.mall.CommonPage;
 import com.mall.api.admin.UmsAdminApi;
@@ -9,6 +10,7 @@ import com.mall.exception.ConsumerException;
 import com.mall.pojo.Admin;
 import com.mall.utils.AppJwtUtil;
 import com.mall.vo.AdminVo;
+import io.jsonwebtoken.Claims;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.checkerframework.checker.units.qual.C;
 import org.springframework.stereotype.Service;
@@ -80,5 +82,17 @@ public class UmsAdminService {
      */
     public Admin register(UmsAdminParam umsAdminParam) {
         return null;
+    }
+
+
+    //解析token
+    public Long getToken(String token) {
+        Claims claimsBody = AppJwtUtil.getClaimsBody(token);
+        int flag = AppJwtUtil.verifyToken(claimsBody);
+        //判断token是否在有效期
+        if (flag == 1 || flag == 2) {
+            throw new ConsumerException("token已失效");
+        }
+        return Convert.toLong(claimsBody.get("id"));
     }
 }

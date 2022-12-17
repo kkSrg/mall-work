@@ -12,8 +12,8 @@
         <module name="mall-dubbo-interface" />
         <module name="mall-autoconfig" />
         <module name="mall-commons" />
-        <module name="mall-geteway" />
         <module name="mall-dubbo-db" />
+        <module name="mall-gateway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -28,7 +28,7 @@
       <module name="mall-dubbo" options="-parameters" />
       <module name="mall-dubbo-db" options="-parameters" />
       <module name="mall-dubbo-interface" options="-parameters" />
-      <module name="mall-geteway" options="-parameters" />
+      <module name="mall-gateway" options="-parameters" />
       <module name="mall-model" options="-parameters" />
       <module name="mall-sso" options="-parameters" />
       <module name="mall-work" options="" />

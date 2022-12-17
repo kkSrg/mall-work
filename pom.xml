@@ -16,11 +16,11 @@
     <modules>
         <module>mall-dubbo</module>
         <module>mall-commons</module>
-        <module>mall-geteway</module>
+        <module>mall-gateway</module>
         <module>mall-model</module>
         <module>mall-admin</module>
         <module>mall-dubbo</module>
-        <module>mall-autocomfig</module>
+        <module>mall-autoconfig</module>
         <module>mall-autoconfig</module>
     </modules>
 
