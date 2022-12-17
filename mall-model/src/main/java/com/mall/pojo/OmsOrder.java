@@ -1,6 +1,7 @@
 package com.mall.pojo;
 
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
+@TableName("oms_order")
 public class OmsOrder implements Serializable {
     private Long id;//订单id
 

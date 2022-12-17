@@ -14,7 +14,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql:///mall?useSSL=false
     username: root
-    password: 123456
+    password: root
 
 # dubbo配置
 dubbo:

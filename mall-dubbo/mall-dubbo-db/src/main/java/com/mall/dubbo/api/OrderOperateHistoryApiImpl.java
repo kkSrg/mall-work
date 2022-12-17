@@ -16,4 +16,9 @@ public class OrderOperateHistoryApiImpl implements OrderOperateHistoryApi {
     public void insertList(List<OmsOrderOperateHistory> operateHistoryList) {
          orderOperateHistoryMapper.insert((OmsOrderOperateHistory) operateHistoryList);
     }
+
+    @Override
+    public void insert(OmsOrderOperateHistory history) {
+        orderOperateHistoryMapper.insert(history);
+    }
 }

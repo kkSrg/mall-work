@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface OrderOperateHistoryApi {
     void insertList(List<OmsOrderOperateHistory> operateHistoryList);
+
+    void insert(OmsOrderOperateHistory history);
 }

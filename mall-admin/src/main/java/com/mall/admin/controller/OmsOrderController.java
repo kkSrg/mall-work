@@ -6,6 +6,7 @@ import com.mall.admin.service.OmsOrderService;
 import com.mall.dto.OmsOrderDeliveryParam;
 import com.mall.dto.OmsOrderDetail;
 import com.mall.dto.OmsOrderQueryParam;
+import com.mall.dto.OmsReceiverInfoParam;
 import com.mall.pojo.OmsOrder;
 import com.mall.pojo.SmsFlashPromotion;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,10 +78,29 @@ public class OmsOrderController {
         return CommonResult.error("失败");
     }
 
+    /**
+     * 获取订单详情：订单信息、商品信息、操作记录
+     * @param id
+     * @return
+     */
     @GetMapping(value = "/{id}")
     public CommonResult<OmsOrderDetail> detail(@PathVariable Long id) {
         OmsOrderDetail orderDetailResult = orderService.detail(id);
         return CommonResult.success(orderDetailResult);
+    }
+
+    /**
+     * 修改收货人信息
+     * @param receiverInfoParam
+     * @return
+     */
+    @PostMapping(value = "/update/receiverInfo")
+    public CommonResult updateReceiverInfo(@RequestBody OmsReceiverInfoParam receiverInfoParam) {
+        int count = orderService.updateReceiverInfo(receiverInfoParam);
+        if (count > 0) {
+            return CommonResult.success(count);
+        }
+        return CommonResult.error("修改失败");
     }
 
 
