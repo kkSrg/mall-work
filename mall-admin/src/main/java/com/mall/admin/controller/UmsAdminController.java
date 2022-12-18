@@ -5,11 +5,13 @@ import com.mall.CommonPage;
 import com.mall.CommonResult;
 import com.mall.admin.service.UmsAdminService;
 import com.mall.dto.UmsAdminLoginParam;
-import com.mall.dto.UmsAdminParam;
 import com.mall.pojo.Admin;
 import com.mall.vo.AdminVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
