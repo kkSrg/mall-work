@@ -103,6 +103,24 @@ public class OmsOrderController {
         return CommonResult.error("修改失败");
     }
 
+    /**
+     * 备注订单
+     * @param id
+     * @param note
+     * @param status
+     * @return
+     */
+    @PostMapping(value = "/update/note")
+    public CommonResult updateNote(@RequestParam("id") Long id,
+                                   @RequestParam("note") String note,
+                                   @RequestParam("status") Integer status) {
+        int count = orderService.updateNote(id, note, status);
+        if (count > 0) {
+            return CommonResult.success(count);
+        }
+        return CommonResult.error("备注失败");
+    }
+
 
 
 }
