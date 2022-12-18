@@ -69,8 +69,8 @@ public class UmsAdminController {
     public CommonResult<CommonPage<AdminVo>> list(String keyword,
                                                   @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer page,
                                                   @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pagesize) {
-        CommonPage<AdminVo> results = umsAdminService.adminsByKw(keyword, page, pagesize);
-        return CommonResult.success(results);
+        CommonPage<AdminVo> result = umsAdminService.adminsByKw(keyword, page, pagesize);
+        return CommonResult.success(result);
     }
 
     /**

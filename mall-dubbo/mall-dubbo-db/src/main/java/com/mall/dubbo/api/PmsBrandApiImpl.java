@@ -107,6 +107,7 @@ public class PmsBrandApiImpl implements PmsBrandApi {
         //注意：使用分页，需要配置分页插件
         IPage<PmsBrand> pg = new Page<>(pageNum, pageSize);
         LambdaQueryWrapper<PmsBrand> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.orderByDesc(PmsBrand::getSort);
         queryWrapper.like(null!= keyword,PmsBrand::getName,keyword);
         pmsBrandMapper.selectPage(pg,queryWrapper);
         return pg;
