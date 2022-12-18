@@ -22,7 +22,6 @@ public class SmsCoupon implements Serializable {
     /**
      * 主键id
      */
-    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**

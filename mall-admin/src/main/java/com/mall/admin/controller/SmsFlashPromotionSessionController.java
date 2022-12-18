@@ -29,7 +29,7 @@ public class SmsFlashPromotionSessionController {
      * @return
      */
     @GetMapping("/list")
-    private CommonResult<List<SmsFlashPromotionSession>> list(){
+    private CommonResult<List<SmsFlashPromotionSession>> flashSessionList(){
         List<SmsFlashPromotionSession> list = smsFlashPromotionSessionService.list();
         return CommonResult.success(list);
     }
@@ -62,7 +62,7 @@ public class SmsFlashPromotionSessionController {
      * @return
      */
     @PostMapping("/update/status/{id}")
-    private CommonResult<Object> updateStatus(@PathVariable Long id,@RequestBody SmsFlashPromotionSession smsFlashPromotionSession){
+    private CommonResult<Object> updateStatus(@PathVariable Long id,SmsFlashPromotionSession smsFlashPromotionSession){
         smsFlashPromotionSession.setId(id);
         smsFlashPromotionSessionService.updateStatus(smsFlashPromotionSession);
         return CommonResult.success(null);

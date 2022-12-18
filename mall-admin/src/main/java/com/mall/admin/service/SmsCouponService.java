@@ -1,5 +1,7 @@
 package com.mall.admin.service;
 
+import cn.hutool.core.convert.Convert;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.CommonPage;
 import com.mall.api.admin.SmsCouponServiceApi;
 import com.mall.pojo.SmsCoupon;
@@ -36,12 +38,15 @@ public class SmsCouponService {
         CommonPage<SmsCoupon> result = new CommonPage<>();
         result.setPageNum(pageNum);
         result.setPageSize(pageSize);
-        result.setTotalPage(1);
-        result.setTotal(10);
 
         //根据优惠券名称和类型分页获取优惠券列表
-        List<SmsCoupon> list = smsCouponServiceApi.getPage(name,type);
-        result.setList(list);
+        Page<SmsCoupon> page = smsCouponServiceApi.getPage(pageNum,pageSize,name,type);
+        result.setList(page.getRecords());
+
+        //分页计算
+        double ceil = Math.ceil(Convert.toDouble(page.getTotal()) / Convert.toDouble(pageSize));
+        result.setTotalPage(Convert.toInt(ceil));
+        result.setTotal(Convert.toInt(page.getTotal()));
         return result;
     }
 }

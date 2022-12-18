@@ -23,7 +23,4 @@ public class PmsProductCategory implements Serializable {
   private String keywords;  //关键字(数据库中与描述的数据一致)
   private String description;  //描述
 
-
-
-
 }
