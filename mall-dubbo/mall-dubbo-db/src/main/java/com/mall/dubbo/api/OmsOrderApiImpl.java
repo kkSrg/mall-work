@@ -21,6 +21,7 @@ public class OmsOrderApiImpl implements OmsOrderApi {
     private OmsOrderMapper omsOrderMapper;
 
 
+
     @Override
     public int delivery(List<OmsOrderDeliveryParam> deliveryParamList) {
         return omsOrderMapper.selectCount((Wrapper<OmsOrder>) deliveryParamList);
@@ -29,12 +30,19 @@ public class OmsOrderApiImpl implements OmsOrderApi {
 
     @Override
     public List<OmsOrder> getList(OmsOrderQueryParam queryParam) {
-        List<OmsOrder> omsOrders;
+        //IPage<OmsOrder> page = new Page<>(pageNum, pageSize);
+        //构建条件
         LambdaQueryWrapper<OmsOrder> wrapper = new LambdaQueryWrapper<>();
-        String orderSn = queryParam.getOrderSn();
-        wrapper.like(OmsOrder::getOrderSn, orderSn);
-        omsOrders = omsOrderMapper.selectList(wrapper);
-        return omsOrders;
+        wrapper.like(queryParam.getOrderSn() != null, OmsOrder::getOrderSn, queryParam.getOrderSn());
+        wrapper.like(queryParam.getReceiverKeyword() != null, OmsOrder::getReceiverName, queryParam.getReceiverKeyword()).or()
+                .like(queryParam.getReceiverKeyword() != null, OmsOrder::getReceiverPhone, queryParam.getReceiverKeyword());
+        wrapper.like(queryParam.getStatus()!=null,OmsOrder::getStatus, queryParam.getStatus());
+        wrapper.like(queryParam.getOrderType()!=null, OmsOrder::getOrderType, queryParam.getOrderType());
+        wrapper.like(queryParam.getSourceType()!=null, OmsOrder::getSourceType, queryParam.getSourceType());
+        wrapper.like(queryParam.getCreateTime()!=null, OmsOrder::getCreateTime, queryParam.getCreateTime());
+
+       // IPage<OmsOrder> omsOrderIPage = omsOrderMapper.selectPage(page, wrapper);
+        return omsOrderMapper.selectList(wrapper);
     }
 
     @Override

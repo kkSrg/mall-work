@@ -3,8 +3,9 @@ package com.mall.dubbo.api;
 import com.mall.api.admin.OrderSettingApi;
 import com.mall.dubbo.mapper.OrderSettingMapper;
 import com.mall.pojo.OmsOrderSetting;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
-
+@DubboService
 public class OrderSettingApiImpl implements OrderSettingApi {
     @Autowired
     private OrderSettingMapper orderSettingMapper;
