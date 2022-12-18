@@ -1,14 +1,15 @@
 package com.mall.admin.controller;
 
+import com.mall.CommonPage;
 import com.mall.CommonResult;
 import com.mall.admin.service.UmsRoleService;
+import com.mall.pojo.Admin;
 import com.mall.pojo.UmsRole;
+import com.mall.vo.AdminVo;
 import com.mall.vo.UmsRoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,11 +22,62 @@ public class UmsRoleController {
 
     /**
      * 获取所有角色
+     *
      * @return
      */
     @GetMapping("listAll")
-    public CommonResult<List<UmsRoleVo>> listAll(){
+    public CommonResult<List<UmsRoleVo>> listAll() {
         List<UmsRoleVo> result = umsRoleService.listAll();
         return CommonResult.success(result);
     }
+
+    /**
+     * 根据角色名称分页获取角色列表
+     *
+     * @return
+     */
+    @GetMapping("list")
+    public CommonResult<CommonPage<UmsRoleVo>> list(String keyword,
+                                                    @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer page,
+                                                    @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pagesize) {
+        CommonPage<UmsRoleVo> result = umsRoleService.adminsByKw(keyword, page, pagesize);
+        return CommonResult.success(result);
+    }
+
+    /**
+     * 添加角色
+     *
+     * @param
+     * @return
+     */
+    @PostMapping("create")
+    public CommonResult create(@RequestBody UmsRole umsRole) {
+        umsRoleService.create(umsRole);
+        return CommonResult.success("操作成功");
+    }
+
+    /**
+     * 修改角色状态
+     * @param roleId
+     * @param status
+     * @return
+     */
+    @PostMapping("/updateStatus/{roleId}")
+    public CommonResult updateStatus(@PathVariable Long roleId,Integer status){
+        umsRoleService.updateStatus(roleId,status);
+        return CommonResult.success("操作成功");
+    }
+
+    /**
+     * 修改指定角色信息
+     * @param roleId
+     * @param umsRoleVo
+     * @return
+     */
+    @PostMapping("/update/{roleId}")
+    public CommonResult update(@PathVariable Long roleId,@RequestBody UmsRoleVo umsRoleVo){
+        umsRoleService.updateInfo(roleId,umsRoleVo);
+        return CommonResult.success("操作成功");
+    }
+
 }
