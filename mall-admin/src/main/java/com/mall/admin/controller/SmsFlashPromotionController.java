@@ -68,7 +68,7 @@ public class SmsFlashPromotionController {
      * @return
      */
     @PostMapping("/update/status/{id}")
-    public CommonResult<Object> updateStatus(@PathVariable Long id,@RequestBody Integer status){
+    public CommonResult<Object> updateStatus(@PathVariable Long id,Integer status){
         smsFlashPromotionService.updateStatus(id,status);
         return CommonResult.success(null);
     }

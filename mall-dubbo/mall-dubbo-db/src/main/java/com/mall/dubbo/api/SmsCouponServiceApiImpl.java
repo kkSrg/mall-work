@@ -3,6 +3,7 @@ package com.mall.dubbo.api;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.api.admin.SmsCouponServiceApi;
 import com.mall.dubbo.mapper.SmsCouponMapper;
 import com.mall.pojo.SmsCoupon;
@@ -24,22 +25,23 @@ public class SmsCouponServiceApiImpl implements SmsCouponServiceApi {
     private SmsCouponMapper smsCouponMapper;
 
     @Override
-    public List<SmsCoupon> getPage(String name, Integer type) {
+    public Page<SmsCoupon> getPage(Integer pageNum, Integer pageSize,String name, Integer type) {
+        Page<SmsCoupon> page = new Page<>(pageNum,pageSize);
         LambdaQueryWrapper<SmsCoupon> wrapper = new LambdaQueryWrapper<>();
-        List<SmsCoupon> list;
+        wrapper.orderByAsc(SmsCoupon::getId);
+        Page<SmsCoupon> smsCouponPage;
         if (StrUtil.isNotEmpty(name) && ObjectUtil.isNotEmpty(type)) {
             wrapper.like(SmsCoupon::getName, name).like(SmsCoupon::getType, type);
-            list = smsCouponMapper.selectList(wrapper);
+            smsCouponPage = smsCouponMapper.selectPage(page,wrapper);
         } else if (StrUtil.isEmpty(name) && ObjectUtil.isNotEmpty(type)) {
             wrapper.like(SmsCoupon::getType, type);
-            list = smsCouponMapper.selectList(wrapper);
+            smsCouponPage = smsCouponMapper.selectPage(page,wrapper);
         } else if (ObjectUtil.isEmpty(type) && StrUtil.isNotEmpty(name)) {
             wrapper.like(SmsCoupon::getName, name);
-            list = smsCouponMapper.selectList(wrapper);
+            smsCouponPage = smsCouponMapper.selectPage(page,wrapper);
         }else {
-            list = smsCouponMapper.selectList(null);
+            smsCouponPage = smsCouponMapper.selectPage(page,null);
         }
-
-        return list;
+        return smsCouponPage;
     }
 }

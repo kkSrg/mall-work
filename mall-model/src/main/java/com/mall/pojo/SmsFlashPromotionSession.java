@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -15,12 +16,11 @@ import java.util.Date;
  */
 @Data
 @TableName("sms_flash_promotion_session")
-public class SmsFlashPromotionSession {
+public class SmsFlashPromotionSession implements Serializable {
 
     /**
      * 主键id
      */
-    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**

@@ -1,5 +1,6 @@
 package com.mall.api.admin;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.pojo.SmsFlashPromotion;
 
 import java.util.List;
@@ -10,9 +11,15 @@ import java.util.List;
 public interface SmsFlashPromotionServiceApi {
 
     /**
+     * 查询所有
+     * @return
+     */
+    List<SmsFlashPromotion> list();
+
+    /**
      * 根据活动名称分页查询
      */
-    List<SmsFlashPromotion> getPage(String keyword);
+    Page<SmsFlashPromotion> getPage(Integer pageNum, Integer pageSize, String keyword);
 
     /**
      * 添加活动
@@ -35,5 +42,8 @@ public interface SmsFlashPromotionServiceApi {
      */
     void updateId(SmsFlashPromotion smsFlashPromotion);
 
+    /**
+     * 查询活动
+     */
     SmsFlashPromotion selectById(Long id);
 }
