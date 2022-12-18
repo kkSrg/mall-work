@@ -19,4 +19,11 @@ public class UmsRoleApiImpl implements UmsRoleApi {
     public List<UmsRole> findAll() {
         return umsRoleMapper.selectList(null);
     }
+
+    @Override
+    public List<UmsRole> findByIds(List<Long> roleIds) {
+        LambdaQueryWrapper<UmsRole> lqw = new LambdaQueryWrapper<>();
+        lqw.in(UmsRole::getId, roleIds);
+        return umsRoleMapper.selectList(lqw);
+    }
 }

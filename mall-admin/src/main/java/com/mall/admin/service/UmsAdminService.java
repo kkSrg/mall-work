@@ -1,29 +1,36 @@
 package com.mall.admin.service;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.convert.Convert;
 import com.mall.CommonPage;
 import com.mall.api.admin.UmsAdminApi;
+import com.mall.api.admin.UmsAdminRoleRelationApi;
 import com.mall.api.admin.UmsMenuApi;
 import com.mall.api.admin.UmsRoleApi;
 import com.mall.dto.UmsAdminParam;
 import com.mall.exception.ConsumerException;
 import com.mall.pojo.Admin;
+import com.mall.pojo.UmsAdminRoleRelation;
 import com.mall.pojo.UmsMenu;
 import com.mall.pojo.UmsRole;
 import com.mall.utils.AppJwtUtil;
 import com.mall.utils.ThreadLocalUtil;
 import com.mall.vo.AdminVo;
 import com.mall.vo.UmsInfoVo;
+import com.mall.vo.UmsRoleVo;
 import io.jsonwebtoken.Claims;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +46,8 @@ public class UmsAdminService {
     @DubboReference
     private UmsMenuApi umsMenuApi;
 
+    @DubboReference
+    private UmsAdminRoleRelationApi umsAdminRoleRelationApi;
 
     /**
      * 登录功能
@@ -80,7 +89,7 @@ public class UmsAdminService {
             AdminVo vo = new AdminVo();
             BeanUtil.copyProperties(admin, vo);
             vo.setCreateTime(admin.getCreateTime() != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(admin.getCreateTime()) : null);
-            vo.setLoginTime(admin.getLoginTime() != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(admin.getCreateTime()) : null);
+            vo.setLoginTime(admin.getLoginTime() != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(admin.getLoginTime()) : null);
             return vo;
         }).collect(Collectors.toList());
         listPage.setList(adminVoList);
@@ -92,10 +101,15 @@ public class UmsAdminService {
     /**
      * 用户注册
      *
-     * @param umsAdminParam
+     * @param
      */
-    public Admin register(UmsAdminParam umsAdminParam) {
-        return null;
+    public AdminVo register(Admin admin) {
+        Admin save = umsAdminApi.save(admin);
+        AdminVo vo = new AdminVo();
+        BeanUtil.copyProperties(save, vo);
+        vo.setCreateTime(admin.getCreateTime() != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(admin.getCreateTime()) : null);
+        vo.setLoginTime(admin.getLoginTime() != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(admin.getLoginTime()) : null);
+        return vo;
     }
 
 
@@ -129,5 +143,56 @@ public class UmsAdminService {
         umsMenus.sort(Comparator.comparing(UmsMenu::getCreateTime));
         vo.setMenus(umsMenus);
         return vo;
+    }
+
+    //获取指定用户的角色
+    public List<UmsRoleVo> getRoleById(Long adminId) {
+        //获取指定用户所有角色id
+        List<Long> roleIds = umsAdminRoleRelationApi.getIds(adminId);
+        //没有对应角色id则返回空集合
+        if (CollUtil.isEmpty(roleIds)) {
+            return new ArrayList<>();
+        }
+        //根据角色id查角色
+        List<UmsRole> roles = umsRoleApi.findByIds(roleIds);
+        List<UmsRoleVo> voList = roles.stream().map(umsRole -> {
+            UmsRoleVo vo = new UmsRoleVo();
+            BeanUtil.copyProperties(umsRole, vo);
+            //转为UTC时间格式
+            vo.setCreateTime(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'+'SS:SS").format(umsRole.getCreateTime()));
+            return vo;
+        }).collect(Collectors.toList());
+        return voList;
+    }
+
+    //修改帐号状态
+    public void updateStatus(Long adminId, Integer status) {
+        umsAdminApi.updateStatus(adminId, status);
+    }
+
+    //给用户分配角色
+    public void update(Long adminId, Long[] roleIds) {
+        umsAdminRoleRelationApi.update(adminId, roleIds);
+    }
+
+    //修改指定用户信息
+    public void updateInfo(Long adminId, AdminVo adminVo) {
+        Admin admin = new Admin();
+        BeanUtils.copyProperties(adminVo, admin);
+        try {
+            admin.setCreateTime(adminVo.getCreateTime() != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(adminVo.getCreateTime()) : null);
+            admin.setLoginTime(adminVo.getLoginTime() != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(adminVo.getLoginTime()) : null);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        umsAdminApi.updateInfo(adminId, admin);
+    }
+
+    //删除指定用户信息
+    public void delete(Long adminId) {
+        //先删除admin表
+        umsAdminApi.delete(adminId);
+        //再删admin和role关系表
+        umsAdminRoleRelationApi.delete(adminId);
     }
 }

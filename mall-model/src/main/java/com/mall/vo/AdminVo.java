@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.text.DateFormat;
 
 
-
 @Data
 public class AdminVo implements Serializable {
 
@@ -21,6 +20,6 @@ public class AdminVo implements Serializable {
     private String note;
     private String createTime;
     private String loginTime;
-    Integer status;
+    private Integer status;
 
 }
