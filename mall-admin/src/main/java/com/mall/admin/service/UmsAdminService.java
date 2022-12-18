@@ -125,23 +125,23 @@ public class UmsAdminService {
     }
 
     //获取当前登录者信息
-    public UmsInfoVo getInfo() {
-        //创建vo作为返回前端的容器
-        UmsInfoVo vo = new UmsInfoVo();
-        //根据token携带的用户id查看username
-        Long id = ThreadLocalUtil.getId();
-        //查ums_admin表
-        Admin admin = umsAdminApi.findById(id);
-        vo.setIcon(admin.getIcon());
-        vo.setUsername(admin.getUsername());
-        List<UmsRole> umsRoles = umsRoleApi.findAll();
-        List<String> roles = CollectionUtil.getFieldValues(umsRoles, "name", String.class);
-        //list转数组
-        vo.setRoles(roles.toArray(new String[]{}));
-        List<UmsMenu> umsMenus = umsMenuApi.findAll();
-        //排序
-        umsMenus.sort(Comparator.comparing(UmsMenu::getCreateTime));
-        vo.setMenus(umsMenus);
+        public UmsInfoVo getInfo() {
+            //创建vo作为返回前端的容器
+            UmsInfoVo vo = new UmsInfoVo();
+            //根据token携带的用户id查看username
+            Long id = ThreadLocalUtil.getId();
+            //查ums_admin表
+            Admin admin = umsAdminApi.findById(id);
+            vo.setIcon(admin.getIcon());
+            vo.setUsername(admin.getUsername());
+            List<UmsRole> umsRoles = umsRoleApi.findAll();
+            List<String> roles = CollectionUtil.getFieldValues(umsRoles, "name", String.class);
+            //list转数组
+            vo.setRoles(roles.toArray(new String[]{}));
+            List<UmsMenu> umsMenus = umsMenuApi.findAll();
+            //排序
+            umsMenus.sort(Comparator.comparing(UmsMenu::getCreateTime));
+            vo.setMenus(umsMenus);
         return vo;
     }
 
