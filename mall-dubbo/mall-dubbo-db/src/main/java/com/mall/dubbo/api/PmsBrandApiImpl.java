@@ -3,8 +3,11 @@ package com.mall.dubbo.api;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.convert.Convert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.api.admin.PmsBrandApi;
 import com.mall.dubbo.mapper.PmsBrandMapper;
+import com.mall.pojo.Admin;
 import com.mall.pojo.PmsBrand;
 import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -95,20 +98,18 @@ public class PmsBrandApiImpl implements PmsBrandApi {
         return count != 0;
     }
 
-    //模糊查询得到的数据总条数
-    @Override
-    public Integer selectCountByKeyWord(String keyword) {
-        LambdaQueryWrapper<PmsBrand> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.like(null!= keyword,PmsBrand::getName,keyword);
-        return pmsBrandMapper.selectCount(queryWrapper);
-    }
+
 
     //模糊查询得到的品牌
     @Override
-    public List<PmsBrand> findABrandsByKeyWord(String keyword) {
+    public IPage<PmsBrand> findABrandsByKeyWord(String keyword, Integer pageNum, Integer pageSize) {
+        //创建分页对象，设置分页参数
+        //注意：使用分页，需要配置分页插件
+        IPage<PmsBrand> pg = new Page<>(pageNum, pageSize);
         LambdaQueryWrapper<PmsBrand> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.like(null!= keyword,PmsBrand::getName,keyword);
-        return pmsBrandMapper.selectList(queryWrapper);
+        pmsBrandMapper.selectPage(pg,queryWrapper);
+        return pg;
     }
 
 

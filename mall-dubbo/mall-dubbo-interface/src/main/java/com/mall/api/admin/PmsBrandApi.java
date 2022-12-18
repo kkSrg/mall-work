@@ -1,5 +1,6 @@
 package com.mall.api.admin;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.mall.pojo.PmsBrand;
 
 import java.util.List;
@@ -30,9 +31,10 @@ public interface PmsBrandApi {
     //更新品牌
     Boolean updateById(Long toLong, PmsBrand pmsBrandParam);
 
-    //模糊查询得到的数据总条数
-    Integer selectCountByKeyWord(String keyword);
-
     //模糊查询得到的品牌
-    List<PmsBrand> findABrandsByKeyWord(String keyword);
+    IPage<PmsBrand> findABrandsByKeyWord(String keyword, Integer pageNum, Integer pageSize);
+
+
+
+
 }

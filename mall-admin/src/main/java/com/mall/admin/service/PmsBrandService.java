@@ -1,6 +1,8 @@
 package com.mall.admin.service;
 
 import cn.hutool.core.convert.Convert;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.CommonPage;
 import com.mall.api.admin.PmsBrandApi;
 import com.mall.exception.ConsumerException;
@@ -29,11 +31,10 @@ public class PmsBrandService {
         CommonPage<PmsBrand> result = new CommonPage<>();
         result.setPageNum(pageNum);
         result.setPageSize(pageSize);
-        Integer total = pmsBrandApi.selectCountByKeyWord(keyword);
-        Integer totalPage = (int) (total / pageSize + ((total % pageSize == 0) ? 0 : 1));
-        result.setTotalPage(totalPage);
-        result.setTotal(total);
-        List<PmsBrand> list = pmsBrandApi.findABrandsByKeyWord(keyword);
+        IPage<PmsBrand> iPage = pmsBrandApi.findABrandsByKeyWord(keyword, pageNum, pageSize);
+        List<PmsBrand> list = iPage.getRecords();
+        result.setTotal(Convert.toInt(iPage.getTotal()));
+        result.setTotalPage(Convert.toInt(iPage.getPages()));
         result.setList(list);
         return result;
     }
