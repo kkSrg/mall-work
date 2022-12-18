@@ -2,12 +2,14 @@ package com.mall.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 
 /**
  * 订单修改收货人信息参数
  */
 @Data
-public class OmsReceiverInfoParam {
+public class OmsReceiverInfoParam implements Serializable {
     private Long orderId;//订单ID
 
     private String receiverName;//收货人姓名
