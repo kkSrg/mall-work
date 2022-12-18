@@ -2,10 +2,11 @@ package com.mall.pojo;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class PmsProduct {
+public class PmsProduct implements Serializable {
     private Long id;
 
     private Long brandId;

@@ -30,7 +30,9 @@ public class PmsProductService {
         listPage.setPageNum(page);
         listPage.setPageSize(pagesize);
         List<PmsProduct> list = pmsProductApi.getList(pmsProductListDto,page,pagesize);
-
+        listPage.setList(list);
+        listPage.setTotal(list.size());
+        listPage.setTotalPage((int) (list.size() / pagesize + ((list.size() % pagesize == 0) ? 0 : 1)));
 
         return listPage;
     }

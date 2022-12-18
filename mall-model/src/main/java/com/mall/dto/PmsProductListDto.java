@@ -2,8 +2,10 @@ package com.mall.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class PmsProductListDto {
+public class PmsProductListDto implements Serializable {
 
     private Integer brandId;//商品品牌编号
     private String keyword;//商品名称模糊关键字
