@@ -2,6 +2,7 @@ package com.mall.admin.controller;
 
 
 import com.mall.CommonPage;
+import com.mall.CommonResult;
 import com.mall.admin.service.SmsFlashPromotionService;
 import com.mall.pojo.SmsFlashPromotion;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,12 @@ public class SmsFlashPromotionController {
      * @date 2022/12/16 15:20
      */
     @GetMapping("/list")
-    public ResponseEntity<CommonPage<SmsFlashPromotion>> list(@RequestParam(value = "pageNum",required = false,defaultValue = "1") Integer pageNum,
-                                                              @RequestParam(value = "pageSize",required = false,defaultValue = "10")Integer pageSize, String keyword) {
+    public CommonResult<CommonPage<SmsFlashPromotion>> list(@RequestParam(value = "pageNum",required = false,defaultValue = "1") Integer pageNum,
+                                                            @RequestParam(value = "pageSize",required = false,defaultValue = "10")Integer pageSize, String keyword) {
         //调用service获取分页
         CommonPage<SmsFlashPromotion> page = smsFlashPromotionService.getPage(pageNum,pageSize,keyword);
 
-        return ResponseEntity.ok(page);
+        return CommonResult.success(page);
     }
 
 
@@ -44,9 +45,9 @@ public class SmsFlashPromotionController {
      * @return
      */
     @PostMapping("/create")
-    public ResponseEntity<Object> create(@RequestBody SmsFlashPromotion smsFlashPromotion){
+    public CommonResult<Object> create(@RequestBody SmsFlashPromotion smsFlashPromotion){
         smsFlashPromotionService.create(smsFlashPromotion);
-        return ResponseEntity.ok(null);
+        return CommonResult.success(null);
     }
 
 
@@ -56,9 +57,9 @@ public class SmsFlashPromotionController {
      * @return
      */
     @PostMapping("/delete/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Long id){
+    public CommonResult<Object> delete(@PathVariable Long id){
         smsFlashPromotionService.deleteById(id);
-        return ResponseEntity.ok(null);
+        return CommonResult.success(null);
     }
 
     /**
@@ -67,9 +68,9 @@ public class SmsFlashPromotionController {
      * @return
      */
     @PostMapping("/update/status/{id}")
-    public ResponseEntity<Object> updateStatus(@PathVariable Long id,@RequestBody Integer status){
+    public CommonResult<Object> updateStatus(@PathVariable Long id,@RequestBody Integer status){
         smsFlashPromotionService.updateStatus(id,status);
-        return ResponseEntity.ok(null);
+        return CommonResult.success(null);
     }
 
     /**
@@ -77,10 +78,10 @@ public class SmsFlashPromotionController {
      * @return
      */
     @PostMapping("/update/{id}")
-    public ResponseEntity<Object> updateId(@PathVariable Long id,@RequestBody SmsFlashPromotion smsFlashPromotion){
+    public CommonResult<Object> updateId(@PathVariable Long id,@RequestBody SmsFlashPromotion smsFlashPromotion){
         smsFlashPromotion.setId(id);
         smsFlashPromotionService.updateId(smsFlashPromotion);
-        return ResponseEntity.ok(null);
+        return CommonResult.success(null);
     }
 
     /**
@@ -89,8 +90,8 @@ public class SmsFlashPromotionController {
      * @return
      */
     @GetMapping("/flash/{id}")
-    public ResponseEntity<SmsFlashPromotion> eventDetails(@PathVariable Long id) {
+    public CommonResult<SmsFlashPromotion> eventDetails(@PathVariable Long id) {
         SmsFlashPromotion smsFlashPromotion = smsFlashPromotionService.eventDetails(id);
-        return ResponseEntity.ok(smsFlashPromotion);
+        return CommonResult.success(smsFlashPromotion);
     }
 }

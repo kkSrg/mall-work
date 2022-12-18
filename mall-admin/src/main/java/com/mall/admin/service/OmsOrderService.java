@@ -6,11 +6,10 @@ import com.mall.api.admin.OrderOperateHistoryApi;
 import com.mall.dto.OmsOrderDeliveryParam;
 import com.mall.dto.OmsOrderDetail;
 import com.mall.dto.OmsOrderQueryParam;
+import com.mall.dto.OmsReceiverInfoParam;
 import com.mall.pojo.OmsOrder;
-import com.mall.pojo.OmsOrderExample;
 import com.mall.pojo.OmsOrderOperateHistory;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -58,9 +57,7 @@ public class OmsOrderService {
     public int close(List<Long> ids, String note) {
         OmsOrder record = new OmsOrder();
         record.setStatus(4);
-        OmsOrderExample example = new OmsOrderExample();
-        example.createCriteria().andDeleteStatusEqualTo(0).andIdIn(ids);
-        int count = omsOrderApi.updateByExampleSelective(record, example);
+        int count = omsOrderApi.updateDelivery(record, ids);
         List<OmsOrderOperateHistory> historyList = ids.stream().map(orderId -> {
             OmsOrderOperateHistory history = new OmsOrderOperateHistory();
             history.setOrderId(orderId);
@@ -77,13 +74,35 @@ public class OmsOrderService {
     public int delete(List<Long> ids) {
         OmsOrder record = new OmsOrder();
         record.setDeleteStatus(1);
-        OmsOrderExample example = new OmsOrderExample();
-        example.createCriteria().andDeleteStatusEqualTo(0).andIdIn(ids);
-        return omsOrderApi.updateByExampleSelective(record, example);
+        return omsOrderApi.deleteByExampleSelective(record, ids);
     }
 
 
     public OmsOrderDetail detail(Long id) {
-        return null;
+        return omsOrderApi.gedetail(id);
+    }
+
+    public int updateReceiverInfo(OmsReceiverInfoParam receiverInfoParam) {
+        OmsOrder order = new OmsOrder();
+        order.setId(receiverInfoParam.getOrderId());
+        order.setReceiverName(receiverInfoParam.getReceiverName());
+        order.setReceiverPhone(receiverInfoParam.getReceiverPhone());
+        order.setReceiverPostCode(receiverInfoParam.getReceiverPostCode());
+        order.setReceiverDetailAddress(receiverInfoParam.getReceiverDetailAddress());
+        order.setReceiverProvince(receiverInfoParam.getReceiverProvince());
+        order.setReceiverCity(receiverInfoParam.getReceiverCity());
+        order.setReceiverRegion(receiverInfoParam.getReceiverRegion());
+        order.setModifyTime(new Date());
+        int count = omsOrderApi.updateByPrimaryKeySelective(order);
+        //插入操作记录
+        OmsOrderOperateHistory history = new OmsOrderOperateHistory();
+        history.setOrderId(receiverInfoParam.getOrderId());
+        history.setCreateTime(new Date());
+        history.setOperateMan("后台管理员");
+        history.setOrderStatus(receiverInfoParam.getStatus());
+        history.setNote("修改收货人信息");
+        orderOperateHistoryApi.insert(history);
+        return count;
     }
 }
+

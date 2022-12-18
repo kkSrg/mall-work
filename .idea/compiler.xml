@@ -17,6 +17,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="mall-geteway" target="1.8" />
       <module name="mall-sso" target="1.8" />
     </bytecodeTargetLevel>
   </component>
