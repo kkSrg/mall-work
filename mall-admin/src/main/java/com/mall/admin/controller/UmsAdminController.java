@@ -162,4 +162,13 @@ public class UmsAdminController {
         return CommonResult.success("操作成功");
     }
 
+    /**
+     * 登出功能
+     * @return
+     */
+    @PostMapping("/logout")
+    public CommonResult logout(){
+        umsAdminService.logout();
+        return CommonResult.success("操作成功");
+    }
 }
