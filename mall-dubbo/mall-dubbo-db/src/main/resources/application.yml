@@ -1,5 +1,3 @@
-server:
-  port: 18082
 spring:
   application:
     name: mall-dubbo-db
@@ -21,7 +19,8 @@ dubbo:
   registry:
     address: spring-cloud://localhost
   protocol:
-    port: 20881
+  # port: 20881
+    port: 20882
     name: dubbo
   scan:
     base-packages: com.mall.dubbo.api
