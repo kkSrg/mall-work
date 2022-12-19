@@ -59,7 +59,12 @@ public class OmsOrderReturnApplyController {
         return CommonResult.success(result);
     }
 
-
+    /**
+     * 修改退货申请状态
+     * @param id
+     * @param statusParam
+     * @return
+     */
     @PostMapping(value = "/update/status/{id}")
     public CommonResult updateStatus(@PathVariable Long id, @RequestBody OmsUpdateStatusParam statusParam) {
         int count = returnApplyService.updateStatus(id, statusParam);

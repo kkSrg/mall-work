@@ -1,5 +1,6 @@
 package com.mall.dubbo.api;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.convert.Convert;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -64,8 +65,10 @@ public class OmsOrderApiImpl implements OmsOrderApi {
 
     @Override
     public OmsOrderDetail gedetail(Long id) {
-        return (OmsOrderDetail) omsOrderMapper.selectById(id);
-
+        OmsOrderDetail detail = new OmsOrderDetail();
+        OmsOrder omsOrder = omsOrderMapper.selectById(id);
+        BeanUtil.copyProperties(omsOrder,detail);
+        return detail;
     }
 
     @Override
@@ -73,5 +76,7 @@ public class OmsOrderApiImpl implements OmsOrderApi {
 
         return omsOrderMapper.updateById(order);
     }
+
+
 
 }

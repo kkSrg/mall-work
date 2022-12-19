@@ -1,7 +1,6 @@
 package com.mall.api.admin;
 
-import cn.hutool.db.Page;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+
 import com.mall.dto.OmsOrderDeliveryParam;
 import com.mall.dto.OmsOrderDetail;
 import com.mall.dto.OmsOrderQueryParam;
@@ -25,4 +24,6 @@ public interface OmsOrderApi {
       OmsOrderDetail gedetail(Long id);
 
       int updateByPrimaryKeySelective(OmsOrder order);
+
+
 }
