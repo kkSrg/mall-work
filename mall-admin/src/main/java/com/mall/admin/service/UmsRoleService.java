@@ -7,10 +7,15 @@ import cn.hutool.core.convert.Convert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.CommonPage;
+import com.mall.api.admin.UmsMenuApi;
 import com.mall.api.admin.UmsRoleApi;
+import com.mall.api.admin.UmsRoleMenuRelationApi;
 import com.mall.pojo.Admin;
+import com.mall.pojo.UmsMenu;
 import com.mall.pojo.UmsRole;
 import com.mall.vo.AdminVo;
+import com.mall.vo.UmsMenuVo;
+import com.mall.vo.UmsResourceVo;
 import com.mall.vo.UmsRoleVo;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.BeanUtils;
@@ -28,6 +33,13 @@ public class UmsRoleService {
 
     @DubboReference
     private UmsRoleApi umsRoleApi;
+
+    @DubboReference
+    private UmsRoleMenuRelationApi umsRoleMenuRelationApi;
+
+    @DubboReference
+    private UmsMenuApi umsMenuApi;
+
 
     /**
      * 获取所有角色
@@ -93,6 +105,35 @@ public class UmsRoleService {
         umsRoleApi.updateInfo(roleId, umsRole);
     }
 
+    //获取角色相关菜单
+    public List<UmsMenuVo> listMenu(Long roleId) {
+        //获取指定角色下所有菜单id
+        List<Long> menuIds = umsRoleMenuRelationApi.getIds(roleId);
+        //没有对应角色id则返回空集合
+        if (CollUtil.isEmpty(menuIds)) {
+            return new ArrayList<>();
+        }
+        //根据菜单id查菜单
+        List<UmsMenu> menus = umsMenuApi.findByIds(menuIds);
+        List<UmsMenuVo> voList = menus.stream().map(umsMenu -> {
+            UmsMenuVo vo = new UmsMenuVo();
+            BeanUtil.copyProperties(umsMenu, vo);
+            //转为UTC时间格式
+            vo.setCreateTime(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'+'SS:SS").format(umsMenu.getCreateTime()));
+            return vo;
+        }).collect(Collectors.toList());
+        return voList;
+    }
 
 
+    //给角色分配菜单
+    public void update(Long roleId, Long[] menuIds) {
+        umsRoleMenuRelationApi.update(roleId, menuIds);
+    }
+
+    //获取角色相关资源
+    public List<UmsResourceVo> listResource(Long roleId) {
+
+        return null;
+    }
 }

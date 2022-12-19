@@ -10,8 +10,8 @@ import java.io.Serializable;
 @Data
 public class PmsProductCategory implements Serializable {
 
-  private long id;  //分类id(编号)
-  private long parentId;  //上级分类的id
+  private Long id;  //分类id(编号)
+  private Long parentId;  //上级分类的id
   private String name;  //分类名称
   private Integer level;  //级别
   private Integer productCount;  //商品数量

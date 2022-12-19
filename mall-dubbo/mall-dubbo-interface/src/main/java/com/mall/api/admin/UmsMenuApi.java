@@ -17,4 +17,10 @@ public interface UmsMenuApi {
     void create(UmsMenu umsMenu);
 
     void delete(Integer id);
+
+    //根据菜单id查菜单
+    List<UmsMenu> findByIds(List<Long> menuIds);
+
+    //根据父级id查
+    List<UmsMenu> getByParentId(Long parentId);
 }

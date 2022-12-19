@@ -10,8 +10,8 @@ import java.io.Serializable;
 @Data
 public class PmsProductAttribute implements Serializable {
 
-  private long id;  //商品属性id编号
-  private long productAttributeCategoryId;  //产品分类id(商品类型编号)
+  private Long id;  //商品属性id编号
+  private Long productAttributeCategoryId;  //产品分类id(商品类型编号)
   private String name;  //属性名称
   private Integer selectType;  //属性选择类型：0->唯一；1->单选；2->多选
   private Integer inputType;  //属性录入方式：0->手工录入；1->从列表中选取
