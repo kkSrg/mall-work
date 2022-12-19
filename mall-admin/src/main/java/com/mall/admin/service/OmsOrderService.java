@@ -35,14 +35,13 @@ public class OmsOrderService {
      * @return
      */
     public CommonPage<OmsOrder> getPage(OmsOrderQueryParam queryParam, Integer pageSize, Integer pageNum) {
-        CommonPage<OmsOrder> result=new CommonPage<>();
-        result.setTotalPage(1);
-        result.setTotal(10);
+       /* CommonPage<OmsOrder> result=new CommonPage<>();
         result.setPageNum(pageNum);
         result.setPageSize(pageSize);
-        List<OmsOrder> list=omsOrderApi.getList(queryParam);
+        List<OmsOrder> list=omsOrderApi.getList(queryParam,pageNum,pageSize,result);
         result.setList(list);
-        return result;
+        return result;*/
+        return omsOrderApi.getPage(queryParam,pageNum,pageSize);
 
     }
     /**
@@ -50,10 +49,10 @@ public class OmsOrderService {
      * @param deliveryParamList
      * @return
      */
-    public int delivery(List<OmsOrderDeliveryParam> deliveryParamList) {
+    public void delivery(List<OmsOrderDeliveryParam> deliveryParamList) {
         //批量发货
-        int count = omsOrderApi.delivery(deliveryParamList);
-        List<OmsOrderOperateHistory> operateHistoryList = deliveryParamList.stream()
+        omsOrderApi.delivery(deliveryParamList);
+       /* List<OmsOrderOperateHistory> operateHistoryList = deliveryParamList.stream()
                 .map(omsOrderDeliveryParam -> {
                     OmsOrderOperateHistory history = new OmsOrderOperateHistory();
                     history.setOrderId(omsOrderDeliveryParam.getOrderId());
@@ -63,8 +62,15 @@ public class OmsOrderService {
                     history.setNote("完成发货");
                     return history;
                 }).collect(Collectors.toList());
-    orderOperateHistoryApi.insertList(operateHistoryList);
-        return count;
+    orderOperateHistoryApi.insertList(operateHistoryList);*/
+        /*OmsOrderOperateHistory omsOrderOperateHistory = new OmsOrderOperateHistory();
+        omsOrderOperateHistory.setOrderId(omsOrderDeliveryParam.getOrderId());
+        omsOrderOperateHistory.setOperateMan("后台管理员");
+        omsOrderOperateHistory.setCreateTime(DateTime.now());
+        omsOrderOperateHistory.setOrderStatus(2);
+        omsOrderOperateHistory.setNote("完成发货");
+        orderOperateHistoryApi.insert(omsOrderOperateHistory);*/
+
 
     }
     /**

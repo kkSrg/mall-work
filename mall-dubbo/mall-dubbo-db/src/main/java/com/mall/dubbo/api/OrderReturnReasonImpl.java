@@ -1,6 +1,9 @@
 package com.mall.dubbo.api;
 
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mall.CommonPage;
 import com.mall.api.admin.OrderReturnReasonApi;
 import com.mall.dubbo.mapper.OrderReturnReasonMapper;
 import com.mall.pojo.OmsOrderReturnReason;
@@ -15,6 +18,22 @@ public class OrderReturnReasonImpl implements OrderReturnReasonApi {
     @Override
     public List<OmsOrderReturnReason> getList() {
         return orderReturnReasonMapper.selectList(null);
+    }
+    @Override
+    public CommonPage<OmsOrderReturnReason> getPage(Integer pageNum, Integer pageSize) {
+        CommonPage<OmsOrderReturnReason> pageResult = new CommonPage<>();
+        IPage<OmsOrderReturnReason> page = new Page<>(pageNum,pageSize);
+        orderReturnReasonMapper.selectPage(page,null);
+
+        pageResult.setPageNum(pageNum);
+        pageResult.setPageSize(pageSize);
+        pageResult.setTotalPage((int)page.getPages());
+        pageResult.setTotal((int)page.getTotal());
+        pageResult.setList(page.getRecords());
+        return pageResult;
+
+
+
     }
 
     @Override
@@ -44,4 +63,6 @@ public class OrderReturnReasonImpl implements OrderReturnReasonApi {
     public int delete(List<Long> ids) {
         return orderReturnReasonMapper.deleteBatchIds(ids);
     }
+
+
 }

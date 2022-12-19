@@ -24,14 +24,15 @@ public class OmsOrderReturnApplyService {
     }
 
     public CommonPage<OmsOrderReturnApply> getPage(OmsReturnApplyQueryParam queryParam, Integer pageSize, Integer pageNum) {
-        CommonPage<OmsOrderReturnApply> result=new CommonPage<>();
+       /* CommonPage<OmsOrderReturnApply> result=new CommonPage<>();
         result.setTotalPage(1);
         result.setTotal(10);
         result.setPageNum(pageNum);
         result.setPageSize(pageSize);
         List<OmsOrderReturnApply> list=orderReturnApplyApi.getList(queryParam);
         result.setList(list);
-        return result;
+        return result;*/
+        return orderReturnApplyApi.getPage(queryParam,pageNum,pageSize);
     }
 
     public OmsOrderReturnApplyResult getItem(Long id) {

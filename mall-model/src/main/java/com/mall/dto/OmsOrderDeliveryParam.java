@@ -10,7 +10,10 @@ import java.io.Serializable;
  */
 @Data
 public class OmsOrderDeliveryParam implements Serializable {
+
     private Long orderId;//订单id
+
     private String deliveryCompany;//物流公司
+
     private String deliverySn;//物流单号
 }

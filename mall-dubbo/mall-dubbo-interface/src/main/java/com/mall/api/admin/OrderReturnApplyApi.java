@@ -1,5 +1,6 @@
 package com.mall.api.admin;
 
+import com.mall.CommonPage;
 import com.mall.dto.OmsOrderReturnApplyResult;
 import com.mall.dto.OmsReturnApplyQueryParam;
 import com.mall.pojo.OmsOrderReturnApply;
@@ -14,4 +15,6 @@ public interface OrderReturnApplyApi {
    int delete(List<Long> ids);
 
     int updateByPrimaryKeySelective(OmsOrderReturnApply returnApply);
+
+    CommonPage<OmsOrderReturnApply> getPage(OmsReturnApplyQueryParam queryParam, Integer pageNum, Integer pageSize);
 }

@@ -38,11 +38,8 @@ public class OmsOrderController {
      */
     @PostMapping(value = "/update/delivery")
     public CommonResult delivery(@RequestBody List<OmsOrderDeliveryParam> deliveryParamList) {
-        int count = orderService.delivery(deliveryParamList);
-        if (count > 0) {
-            return CommonResult.success(count);
-        }
-        return CommonResult.error("失败");
+        orderService.delivery(deliveryParamList);
+        return CommonResult.success(1);
     }
 
     /**

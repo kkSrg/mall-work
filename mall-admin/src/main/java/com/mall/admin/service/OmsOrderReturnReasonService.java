@@ -15,14 +15,15 @@ public class OmsOrderReturnReasonService {
     @DubboReference
     private OrderReturnReasonApi orderReturnReasonApi;
     public CommonPage<OmsOrderReturnReason> getPage(Integer pageSize, Integer pageNum) {
-        CommonPage<OmsOrderReturnReason> result=new CommonPage<>();
+        /*CommonPage<OmsOrderReturnReason> result=new CommonPage<>();
         result.setTotalPage(1);
         result.setTotal(10);
         result.setPageNum(pageNum);
         result.setPageSize(pageSize);
         List<OmsOrderReturnReason> list=orderReturnReasonApi.getList();
         result.setList(list);
-        return result;
+        return result;*/
+        return orderReturnReasonApi.getPage(pageNum,pageSize);
     }
     /**
      * 添加退货原因
