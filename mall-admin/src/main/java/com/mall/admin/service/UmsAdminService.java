@@ -61,7 +61,6 @@ public class UmsAdminService {
         //查询数据库
         Admin admin = umsAdminApi.login(username, encryptedPwd);
 
-
         if (admin == null) {
             //用户名密码错误!!
             throw new ConsumerException("验证输入错误！");

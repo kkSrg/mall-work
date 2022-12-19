@@ -35,7 +35,8 @@ public class GlobalAuthFilter implements GlobalFilter {
         //2.设置放行请求 登录和验证码校验
         URI uri = request.getURI();
         log.info(uri.toString());//方便观察请求路径
-        if (StrUtil.equals(request.getURI().getPath(), "/admin/login")) {
+        if (StrUtil.equals(request.getURI().getPath(), "/admin/login")
+                || StrUtil.equals(request.getURI().getPath(),"/aliyun/oss/upload")) {
             return chain.filter(exchange);
         }
         //3.获取token
