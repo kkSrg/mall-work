@@ -4,7 +4,7 @@ import cn.hutool.core.convert.Convert;
 import com.mall.CommonPage;
 import com.mall.CommonResult;
 import com.mall.admin.service.PmsProductAttributeCategoryService;
-import com.mall.dto.PmsProductAttributeCategoryDto;
+import com.mall.vo.PmsProductAttributeCategoryVo;
 import com.mall.pojo.PmsProductAttributeCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +34,8 @@ public class PmsProductAttributeCategoryController {
      * @return
      */
     @GetMapping("/list/withAttr")
-    public CommonResult<List<PmsProductAttributeCategoryDto>> listWithAttr(){
-        List<PmsProductAttributeCategoryDto> result = service.listWithAttr();
+    public CommonResult<List<PmsProductAttributeCategoryVo>> listWithAttr(){
+        List<PmsProductAttributeCategoryVo> result = service.listWithAttr();
         return CommonResult.success(result);
     }
 

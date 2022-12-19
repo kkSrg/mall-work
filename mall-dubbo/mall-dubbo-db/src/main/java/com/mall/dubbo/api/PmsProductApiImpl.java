@@ -35,4 +35,104 @@ public class PmsProductApiImpl implements PmsProductApi {
         pmsProductMapper.selectPage(pg,wrapper);
         return pg;
     }
+
+    //根据商品名称或货号模糊查询
+    @Override
+    public List<PmsProduct> simpleList(String keyword) {
+        LambdaQueryWrapper<PmsProduct> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(PmsProduct::getName,keyword);
+        queryWrapper.like(PmsProduct::getProductSn,keyword);
+        List<PmsProduct> pmsProducts = pmsProductMapper.selectList(queryWrapper);
+        return pmsProducts;
+    }
+
+    //根据商品id查询商品信息
+    @Override
+    public PmsProduct getMsgById(Long id) {
+        LambdaQueryWrapper<PmsProduct> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(null!=id,PmsProduct::getId,id);
+        PmsProduct pmsProduct = pmsProductMapper.selectOne(queryWrapper);
+        return pmsProduct;
+    }
+
+    @Override
+    public void insert(PmsProduct pmsProduct) {
+        pmsProductMapper.insert(pmsProduct);
+    }
+
+    @Override
+    public void update(Long id, PmsProduct pmsProduct) {
+        LambdaQueryWrapper<PmsProduct> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(null!=id,PmsProduct::getId,id);
+        pmsProductMapper.update(pmsProduct,queryWrapper);
+    }
+
+    @Override
+    public void deleteStatus(List<Long> idList,Integer deleteStatus) {
+        LambdaQueryWrapper<PmsProduct> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(PmsProduct::getId,idList);
+        List<PmsProduct> productList = pmsProductMapper.selectList(queryWrapper);
+        for (PmsProduct pmsProduct : productList) {
+            pmsProduct.setDeleteStatus(deleteStatus);
+            LambdaQueryWrapper<PmsProduct> queryWrapper1 = new LambdaQueryWrapper<>();
+            queryWrapper1.eq(PmsProduct::getId,pmsProduct.getId());
+            pmsProductMapper.update(pmsProduct,queryWrapper1);
+        }
+    }
+
+    @Override
+    public void newStatus(List<Long> idList, Integer newStatus) {
+        LambdaQueryWrapper<PmsProduct> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(PmsProduct::getId,idList);
+        List<PmsProduct> productList = pmsProductMapper.selectList(queryWrapper);
+        for (PmsProduct pmsProduct : productList) {
+            pmsProduct.setNewStatus(newStatus);
+            LambdaQueryWrapper<PmsProduct> queryWrapper1 = new LambdaQueryWrapper<>();
+            queryWrapper1.eq(PmsProduct::getId,pmsProduct.getId());
+            pmsProductMapper.update(pmsProduct,queryWrapper1);
+        }
+    }
+
+    @Override
+    public void publishStatus(List<Long> idList, Integer publishStatus) {
+        LambdaQueryWrapper<PmsProduct> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(PmsProduct::getId,idList);
+        List<PmsProduct> productList = pmsProductMapper.selectList(queryWrapper);
+        for (PmsProduct pmsProduct : productList) {
+            pmsProduct.setPublishStatus(publishStatus);
+            LambdaQueryWrapper<PmsProduct> queryWrapper1 = new LambdaQueryWrapper<>();
+            queryWrapper1.eq(PmsProduct::getId,pmsProduct.getId());
+            pmsProductMapper.update(pmsProduct,queryWrapper1);
+        }
+    }
+
+    @Override
+    public void recommendStatus(List<Long> idList, Integer recommendStatus) {
+        LambdaQueryWrapper<PmsProduct> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(PmsProduct::getId,idList);
+        List<PmsProduct> productList = pmsProductMapper.selectList(queryWrapper);
+        for (PmsProduct pmsProduct : productList) {
+            pmsProduct.setRecommandStatus(recommendStatus);
+            LambdaQueryWrapper<PmsProduct> queryWrapper1 = new LambdaQueryWrapper<>();
+            queryWrapper1.eq(PmsProduct::getId,pmsProduct.getId());
+            pmsProductMapper.update(pmsProduct,queryWrapper1);
+        }
+    }
+
+    @Override
+    public void verifyStatus(String detail, List<Long> idList, Integer verifyStatus) {
+        LambdaQueryWrapper<PmsProduct> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(PmsProduct::getId,idList);
+        List<PmsProduct> productList = pmsProductMapper.selectList(queryWrapper);
+        for (PmsProduct pmsProduct : productList) {
+            pmsProduct.setVerifyStatus(verifyStatus);
+            pmsProduct.setDetailTitle(detail);
+            pmsProduct.setDetailDesc(detail);
+            pmsProduct.setDetailHtml(detail);
+            pmsProduct.setDetailMobileHtml(detail);
+            LambdaQueryWrapper<PmsProduct> queryWrapper1 = new LambdaQueryWrapper<>();
+            queryWrapper1.eq(PmsProduct::getId,pmsProduct.getId());
+            pmsProductMapper.update(pmsProduct,queryWrapper1);
+        }
+    }
 }

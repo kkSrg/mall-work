@@ -4,9 +4,11 @@ import com.mall.CommonPage;
 import com.mall.CommonResult;
 import com.mall.admin.service.UmsMenuService;
 import com.mall.pojo.UmsMenu;
+import com.mall.vo.UmsMenuVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -38,8 +40,8 @@ public class UmsMenuController {
      * @return
      */
     @PostMapping("updateHidden/{id}")
-    public CommonResult updateHidden(@PathVariable Integer id,Integer hidden){
-        umsMenuService.updateHidden(id,hidden);
+    public CommonResult updateHidden(@PathVariable Integer id, Integer hidden) {
+        umsMenuService.updateHidden(id, hidden);
         return CommonResult.success(1);
     }
 
@@ -79,6 +81,7 @@ public class UmsMenuController {
 
     /**
      * 根据ID删除后台菜单
+     *
      * @param id
      * @return
      */
@@ -86,6 +89,16 @@ public class UmsMenuController {
     public CommonResult delete(@PathVariable Integer id){
         umsMenuService.delete(id);
         return CommonResult.success(1);
+    }
+
+    /**
+     * 树形结构返回所有菜单列表
+     * @return
+     */
+    @GetMapping("/treeList")
+    public CommonResult treeList() {
+        List<UmsMenuVo> voList = umsMenuService.treeList();
+        return CommonResult.success(voList);
     }
 
 

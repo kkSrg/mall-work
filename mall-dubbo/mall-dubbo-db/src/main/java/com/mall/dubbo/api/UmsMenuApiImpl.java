@@ -7,6 +7,7 @@ import com.mall.api.admin.UmsMenuApi;
 import com.mall.dubbo.mapper.UmsMenuMapper;
 import com.mall.pojo.PmsBrand;
 import com.mall.pojo.UmsMenu;
+import com.mall.pojo.UmsRole;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -52,5 +53,19 @@ public class UmsMenuApiImpl implements UmsMenuApi {
     @Override
     public void delete(Integer id) {
         umsMenuMapper.deleteById(id);
+    }
+
+    @Override
+    public List<UmsMenu> findByIds(List<Long> menuIds) {
+        LambdaQueryWrapper<UmsMenu> lqw = new LambdaQueryWrapper<>();
+        lqw.in(UmsMenu::getId, menuIds);
+        return umsMenuMapper.selectList(lqw);
+    }
+
+    @Override
+    public List<UmsMenu> getByParentId(Long parentId) {
+        LambdaQueryWrapper<UmsMenu> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(UmsMenu::getParentId,parentId);
+        return umsMenuMapper.selectList(wrapper);
     }
 }

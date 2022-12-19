@@ -59,4 +59,11 @@ public class UmsRoleApiImpl implements UmsRoleApi {
     public void updateInfo(Long roleId, UmsRole umsRole) {
         umsRoleMapper.updateById(umsRole);
     }
+
+    @Override
+    public void delete(Long[] ids) {
+        LambdaQueryWrapper<UmsRole> lqw=new LambdaQueryWrapper<>();
+        lqw.in(UmsRole::getId,ids);
+        umsRoleMapper.delete(lqw);
+    }
 }

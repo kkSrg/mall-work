@@ -1,9 +1,8 @@
 package com.mall.dubbo.api;
 
-import cn.hutool.core.convert.Convert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.mall.api.admin.PmsProductAttributeCategoryApi;
-import com.mall.dto.PmsProductAttributeCategoryDto;
+import com.mall.vo.PmsProductAttributeCategoryVo;
 import com.mall.dubbo.mapper.PmsProductAttributeCategoryMapper;
 import com.mall.pojo.PmsProductAttributeCategory;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -40,7 +39,7 @@ public class PmsProductAttributeCategoryApiImpl implements PmsProductAttributeCa
     //添加商品属性分类
     @Override
     public Boolean create(String name) {
-        PmsProductAttributeCategory category = new PmsProductAttributeCategoryDto();
+        PmsProductAttributeCategory category = new PmsProductAttributeCategoryVo();
         category.setName(name);
         //TODO: category的属性数量和参数数量应该查数据库正确赋值(但此处分类数据尚未插入,可能不要添加下面两个数据)
         category.setAttributeCount(0);

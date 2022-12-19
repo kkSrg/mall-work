@@ -8,6 +8,8 @@ import com.mall.pojo.UmsResourceCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("resource")
 public class UmsResourceController {
@@ -63,5 +65,15 @@ public class UmsResourceController {
     public CommonResult update(@RequestBody UmsResource umsResource){
         umsResourceService.update(umsResource);
         return CommonResult.success(1);
+    }
+
+    /**
+     * 查询所有后台资源
+     * @return
+     */
+    @GetMapping("listAll")
+    public CommonResult<List<UmsResource>> listAll(){
+        List<UmsResource> result = umsResourceService.listAll();
+        return CommonResult.success(result);
     }
 }

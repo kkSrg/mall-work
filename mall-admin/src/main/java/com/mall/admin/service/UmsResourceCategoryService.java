@@ -1,6 +1,5 @@
 package com.mall.admin.service;
 
-import com.mall.CommonResult;
 import com.mall.api.admin.UmsResourceCategoryApi;
 import com.mall.pojo.UmsResource;
 import com.mall.pojo.UmsResourceCategory;
@@ -20,8 +19,7 @@ public class UmsResourceCategoryService {
      * 查询所有后台资源分类
      */
     public List<UmsResourceCategory> listAll() {
-        List<UmsResourceCategory> list = umsResourceCategoryApi.findAll();
-        return list;
+        return umsResourceCategoryApi.findAll();
     }
 
     /**

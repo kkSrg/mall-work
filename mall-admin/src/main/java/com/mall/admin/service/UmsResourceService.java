@@ -3,19 +3,24 @@ package com.mall.admin.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.mall.CommonPage;
 import com.mall.api.admin.UmsResourceApi;
+import com.mall.api.admin.UmsRoleResourceRelationApi;
 import com.mall.pojo.PmsProduct;
 import com.mall.pojo.UmsResource;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
 public class UmsResourceService {
 
-
     @DubboReference
     private UmsResourceApi umsResourceApi;
+
+    @DubboReference
+    private UmsRoleResourceRelationApi umsRoleResourceRelationApi;
+
 
     /**
      * 分页模糊查询后台资源
@@ -34,6 +39,16 @@ public class UmsResourceService {
         listPage.setTotal(Math.toIntExact(iPage.getTotal()));
         listPage.setTotalPage(Math.toIntExact(iPage.getPages()));
         return listPage;
+    }
+
+    //查询所有后台资源
+    public List<UmsResource> listAll() {
+        return umsResourceApi.findAll();
+    }
+
+    //给角色分配资源
+    public void update(Long roleId, Long[] resourceIds) {
+        umsRoleResourceRelationApi.update(roleId,resourceIds);
     }
 
     /**
