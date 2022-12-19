@@ -4,8 +4,11 @@ import com.mall.CommonPage;
 import com.mall.CommonResult;
 import com.mall.admin.service.UmsResourceService;
 import com.mall.pojo.UmsResource;
+import com.mall.pojo.UmsResourceCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("resource")
@@ -28,6 +31,16 @@ public class UmsResourceController {
                                                       @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pagesize,
                                                       Integer categoryId,String nameKeyword, String urlKeyword){
         CommonPage<UmsResource> result = umsResourceService.getPage(page,pagesize,categoryId,nameKeyword,urlKeyword);
+        return CommonResult.success(result);
+    }
+
+    /**
+     * 查询所有后台资源
+     * @return
+     */
+    @GetMapping("listAll")
+    public CommonResult<List<UmsResource>> listAll(){
+        List<UmsResource> result = umsResourceService.listAll();
         return CommonResult.success(result);
     }
 }

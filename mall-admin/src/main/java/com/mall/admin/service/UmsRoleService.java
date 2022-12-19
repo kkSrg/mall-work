@@ -7,17 +7,17 @@ import cn.hutool.core.convert.Convert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.CommonPage;
-import com.mall.api.admin.UmsMenuApi;
-import com.mall.api.admin.UmsRoleApi;
-import com.mall.api.admin.UmsRoleMenuRelationApi;
+import com.mall.api.admin.*;
 import com.mall.pojo.Admin;
 import com.mall.pojo.UmsMenu;
+import com.mall.pojo.UmsResource;
 import com.mall.pojo.UmsRole;
 import com.mall.vo.AdminVo;
 import com.mall.vo.UmsMenuVo;
 import com.mall.vo.UmsResourceVo;
 import com.mall.vo.UmsRoleVo;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +39,12 @@ public class UmsRoleService {
 
     @DubboReference
     private UmsMenuApi umsMenuApi;
+
+    @DubboReference
+    private UmsRoleResourceRelationApi umsRoleResourceRelationApi;
+
+    @DubboReference
+    private UmsResourceApi umsResourceApi;
 
 
     /**
@@ -133,7 +139,31 @@ public class UmsRoleService {
 
     //获取角色相关资源
     public List<UmsResourceVo> listResource(Long roleId) {
+        //获取指定角色下所有资源id
+        List<Long> resourceIds = umsRoleResourceRelationApi.getIds(roleId);
+        //没有对应角色id则返回空集合
+        if (CollUtil.isEmpty(resourceIds)) {
+            return new ArrayList<>();
+        }
+        //根据资源id查资源
+        List<UmsResource> resources = umsResourceApi.findByIds(resourceIds);
+        List<UmsResourceVo> voList = resources.stream().map(umsResource -> {
+            UmsResourceVo vo = new UmsResourceVo();
+            BeanUtil.copyProperties(umsResource, vo);
+            //转为UTC时间格式
+            vo.setCreateTime(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'+'SS:SS").format(umsResource.getCreateTime()));
+            return vo;
+        }).collect(Collectors.toList());
+        return voList;
+    }
 
-        return null;
+    //批量删除角色
+    public void delete(Long[] ids) {
+        //先删角色表
+        umsRoleApi.delete(ids);
+        //再删角色菜单关系表数据
+        umsRoleMenuRelationApi.delete(ids);
+        //删除角色资源关系表数据
+        umsRoleResourceRelationApi.delete(ids);
     }
 }

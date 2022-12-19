@@ -39,4 +39,11 @@ public class UmsRoleMenuRelationApiImpl implements UmsRoleMenuRelationApi {
             umsRoleMenuRelationMapper.insert(umsRoleMenuRelation);
         }
     }
+
+    @Override
+    public void delete(Long[] ids) {
+        LambdaQueryWrapper<UmsRoleMenuRelation> lqw = new LambdaQueryWrapper<>();
+        lqw.in(UmsRoleMenuRelation::getRoleId, ids);
+        umsRoleMenuRelationMapper.delete(lqw);
+    }
 }

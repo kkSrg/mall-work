@@ -8,4 +8,7 @@ public interface UmsRoleMenuRelationApi {
 
     //给角色分配菜单
     void update(Long roleId, Long[] menuIds);
+
+    //删除角色菜单关系表
+    void delete(Long[] ids);
 }

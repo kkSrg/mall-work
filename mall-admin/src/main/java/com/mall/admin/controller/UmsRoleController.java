@@ -2,8 +2,10 @@ package com.mall.admin.controller;
 
 import com.mall.CommonPage;
 import com.mall.CommonResult;
+import com.mall.admin.service.UmsResourceService;
 import com.mall.admin.service.UmsRoleService;
 import com.mall.pojo.Admin;
+import com.mall.pojo.UmsResource;
 import com.mall.pojo.UmsRole;
 import com.mall.vo.AdminVo;
 import com.mall.vo.UmsMenuVo;
@@ -21,6 +23,9 @@ public class UmsRoleController {
 
     @Autowired
     private UmsRoleService umsRoleService;
+
+    @Autowired
+    private UmsResourceService umsResourceService;
 
     /**
      * 获取所有角色
@@ -118,5 +123,29 @@ public class UmsRoleController {
     public CommonResult listResource(@PathVariable Long roleId) {
         List<UmsResourceVo> voList = umsRoleService.listResource(roleId);
         return CommonResult.success(voList);
+    }
+
+    /**
+     * 给角色分配资源
+     * @param roleId
+     * @param resourceIds
+     * @return
+     */
+    @PostMapping("/allocResource")
+    public CommonResult allocResource(Long roleId, @RequestParam Long[] resourceIds) {
+        umsResourceService.update(roleId, resourceIds);
+        return CommonResult.success("操作成功");
+    }
+
+    /**
+     * 批量删除角色
+     *
+     * @param ids
+     * @return
+     */
+    @PostMapping("/delete")
+    public CommonResult delete(@RequestParam Long[] ids) {
+        umsRoleService.delete(ids);
+        return CommonResult.success("操作成功");
     }
 }

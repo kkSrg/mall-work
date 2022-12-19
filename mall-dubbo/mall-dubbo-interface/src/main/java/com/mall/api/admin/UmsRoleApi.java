@@ -22,4 +22,7 @@ public interface UmsRoleApi {
 
     //修改角色信息
     void updateInfo(Long roleId, UmsRole umsRole);
+
+    //删除
+    void delete(Long[] ids);
 }

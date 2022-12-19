@@ -1,6 +1,5 @@
 package com.mall.admin.service;
 
-import com.mall.CommonResult;
 import com.mall.api.admin.UmsResourceCategoryApi;
 import com.mall.pojo.UmsResourceCategory;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -16,7 +15,6 @@ public class UmsResourceCategoryService {
     private UmsResourceCategoryApi umsResourceCategoryApi;
 
     public List<UmsResourceCategory> listAll() {
-        List<UmsResourceCategory> list = umsResourceCategoryApi.findAll();
-        return list;
+        return umsResourceCategoryApi.findAll();
     }
 }
