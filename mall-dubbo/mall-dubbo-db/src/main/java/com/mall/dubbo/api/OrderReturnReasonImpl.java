@@ -1,5 +1,6 @@
 package com.mall.dubbo.api;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.mall.api.admin.OrderReturnReasonApi;
 import com.mall.dubbo.mapper.OrderReturnReasonMapper;
 import com.mall.pojo.OmsOrderReturnReason;
@@ -32,8 +33,11 @@ public class OrderReturnReasonImpl implements OrderReturnReasonApi {
     }
 
     @Override
-    public int updateStatus(List<Long> ids) {
-        return orderReturnReasonMapper.updateById((OmsOrderReturnReason) ids);
+    public int updateStatus(List<Long> ids,Integer status) {
+        OmsOrderReturnReason omsOrderReturnReason=new OmsOrderReturnReason();
+        LambdaUpdateWrapper<OmsOrderReturnReason> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.in(OmsOrderReturnReason::getId,ids).set(OmsOrderReturnReason::getStatus,status);;
+        return orderReturnReasonMapper.update(omsOrderReturnReason,wrapper);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.mall.dubbo.api;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.mall.api.admin.OrderReturnApplyApi;
 import com.mall.dto.OmsOrderReturnApplyResult;
@@ -32,7 +33,10 @@ public class OrderReturnApplyApiImpl implements OrderReturnApplyApi {
 
     @Override
     public OmsOrderReturnApplyResult getDetail(Long id) {
-        return null;
+        OmsOrderReturnApplyResult omsOrderReturnApplyResult=new OmsOrderReturnApplyResult();
+        OmsOrderReturnApply omsOrderReturnApply = orderReturnApplyMapper.selectById(id);
+        BeanUtil.copyProperties(omsOrderReturnApply,omsOrderReturnApplyResult);
+        return omsOrderReturnApplyResult;
     }
 
     @Override

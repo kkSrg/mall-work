@@ -56,10 +56,8 @@ public class OmsOrderReturnReasonService {
         if(!status.equals(0)&&!status.equals(1)){
             return 0;
         }
-        OmsOrderReturnReason record = new OmsOrderReturnReason();
-        record.setStatus(status);
 
-        return orderReturnReasonApi.updateStatus(ids);
+        return orderReturnReasonApi.updateStatus(ids,status);
     }
 
     public int delete(List<Long> ids) {

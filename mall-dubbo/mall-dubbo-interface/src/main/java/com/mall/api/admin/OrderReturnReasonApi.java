@@ -13,7 +13,7 @@ public interface OrderReturnReasonApi {
 
     OmsOrderReturnReason selectByPrimaryKey(Long id);
 
-    int updateStatus(List<Long> ids);
+    int updateStatus(List<Long> ids,Integer status);
 
     int delete(List<Long> ids);
 }
