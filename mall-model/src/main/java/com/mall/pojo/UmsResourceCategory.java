@@ -6,11 +6,12 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @TableName("ums_resource_category")
 @Data
-public class UmsResourceCategory {
+public class UmsResourceCategory implements Serializable {
 
     private Long id;
 

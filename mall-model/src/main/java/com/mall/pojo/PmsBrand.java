@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Data
 public class PmsBrand implements Serializable {
 
-  private long id;  //品牌编号
+  private Long id;  //品牌编号
   private String name;  //品牌名
   private String firstLetter;  //首字母
   private Integer sort;  //排序

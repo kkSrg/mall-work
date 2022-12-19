@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Data
 public class PmsProductAttributeCategory implements Serializable {
 
-  private long id;  //编号
+  private Long id;  //编号
   private String name;  //类型名称
   private Integer attributeCount;  //属性数量
   private Integer paramCount;  //参数数量
