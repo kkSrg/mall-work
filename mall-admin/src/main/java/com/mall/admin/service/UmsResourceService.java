@@ -35,4 +35,28 @@ public class UmsResourceService {
         listPage.setTotalPage(Math.toIntExact(iPage.getPages()));
         return listPage;
     }
+
+    /**
+     * 添加后台资源
+     * @param umsResource
+     */
+    public void create(UmsResource umsResource) {
+        umsResourceApi.create(umsResource);
+    }
+
+    /**
+     * 根据ID删除后台资源
+     * @param id
+     */
+    public void delete(Integer id) {
+        umsResourceApi.delete(id);
+    }
+
+    /**
+     * 修改后台资源
+     * @param umsResource
+     */
+    public void update(UmsResource umsResource) {
+        umsResourceApi.update(umsResource);
+    }
 }

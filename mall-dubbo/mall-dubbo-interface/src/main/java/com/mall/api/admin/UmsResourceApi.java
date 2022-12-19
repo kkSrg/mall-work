@@ -8,4 +8,10 @@ import java.util.Map;
 public interface UmsResourceApi {
 
     IPage<UmsResource> getList(Integer categoryId, String nameKeyword, String urlKeyword, Integer page, Integer pagesize);
+
+    void create(UmsResource umsResource);
+
+    void delete(Integer id);
+
+    void update(UmsResource umsResource);
 }

@@ -4,6 +4,7 @@ import com.mall.CommonPage;
 import com.mall.CommonResult;
 import com.mall.admin.service.UmsResourceService;
 import com.mall.pojo.UmsResource;
+import com.mall.pojo.UmsResourceCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,5 +30,38 @@ public class UmsResourceController {
                                                       Integer categoryId,String nameKeyword, String urlKeyword){
         CommonPage<UmsResource> result = umsResourceService.getPage(page,pagesize,categoryId,nameKeyword,urlKeyword);
         return CommonResult.success(result);
+    }
+
+    /**
+     * 添加后台资源
+     * @param umsResource
+     * @return
+     */
+    @PostMapping("create")
+    public CommonResult create(@RequestBody UmsResource umsResource){
+        umsResourceService.create(umsResource);
+        return CommonResult.success(1);
+    }
+
+    /**
+     * 根据ID删除后台资源
+     * @param id
+     * @return
+     */
+    @PostMapping("delete/{id}")
+    public CommonResult delete(@PathVariable Integer id){
+        umsResourceService.delete(id);
+        return CommonResult.success(1);
+    }
+
+    /**
+     * 修改后台资源
+     * @param umsResource
+     * @return
+     */
+    @PostMapping("update/{id}")
+    public CommonResult update(@RequestBody UmsResource umsResource){
+        umsResourceService.update(umsResource);
+        return CommonResult.success(1);
     }
 }

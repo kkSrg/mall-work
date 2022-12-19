@@ -87,4 +87,6 @@ public class UmsMenuController {
         umsMenuService.delete(id);
         return CommonResult.success(1);
     }
+
+
 }
