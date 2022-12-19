@@ -1,5 +1,7 @@
 package com.mall.pojo;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -9,7 +11,10 @@ import java.util.Date;
 public class UmsMenu implements Serializable {
     private Long id;//菜单id
     private  Long parentId;//父级id
+
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;//创建时间
+
     private String title;//菜单名称
     private Integer level;//菜单级数
     private Integer sort;//菜单排序
