@@ -9,6 +9,7 @@ import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @DubboService
 public class PmsProductAttributeApiImpl implements PmsProductAttributeApi {
@@ -16,12 +17,51 @@ public class PmsProductAttributeApiImpl implements PmsProductAttributeApi {
     @Autowired
     private PmsProductAttributeMapper pmsProductAttributeMapper;
 
-    //根据产品分类id查找其下的所有属性参数
+
+
+    //根据分类查询属性列表或参数列表
     @Override
-    public List<PmsProductAttribute> selectAllAttributeByCategoryId(long id) {
+    public List<PmsProductAttribute> selectByCidAndType(List<Long> attributeId, Integer type) {
         LambdaQueryWrapper<PmsProductAttribute> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(PmsProductAttribute::getProductAttributeCategoryId,id);
-        List<PmsProductAttribute> list = pmsProductAttributeMapper.selectList(queryWrapper);
+        queryWrapper.in(PmsProductAttribute::getId,attributeId);
+        queryWrapper.eq(PmsProductAttribute::getType,type);
+        List<PmsProductAttribute> attributeList = pmsProductAttributeMapper.selectList(queryWrapper);
+        return attributeList;
+    }
+
+    @Override
+    public List<PmsProductAttribute> getMsgByAttributeIds(List<Long> attributeIds) {
+        List<PmsProductAttribute> list = attributeIds.stream().map(attributeId->{
+            return pmsProductAttributeMapper.selectById(attributeId);
+        }).collect(Collectors.toList());
         return list;
+    }
+
+    @Override
+    public PmsProductAttribute getMsgByAttributeId(Long attributeId) {
+        PmsProductAttribute attribute = pmsProductAttributeMapper.selectById(attributeId);
+        return attribute;
+    }
+
+    //添加商品属性信息
+    @Override
+    public void create(PmsProductAttribute attribute) {
+        pmsProductAttributeMapper.insert(attribute);
+    }
+
+    //批量删除商品属性
+    @Override
+    public void delete(List<Long> idList) {
+        LambdaQueryWrapper<PmsProductAttribute> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(PmsProductAttribute::getId,idList);
+        pmsProductAttributeMapper.delete(queryWrapper);
+    }
+
+    //修改商品属性信息
+    @Override
+    public void update(Long id, PmsProductAttribute attribute) {
+        LambdaQueryWrapper<PmsProductAttribute> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(null!=id,PmsProductAttribute::getId,id);
+        pmsProductAttributeMapper.update(attribute,queryWrapper);
     }
 }
