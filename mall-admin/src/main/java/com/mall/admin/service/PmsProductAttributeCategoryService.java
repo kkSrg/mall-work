@@ -5,7 +5,8 @@ import cn.hutool.core.convert.Convert;
 import com.mall.CommonPage;
 import com.mall.api.admin.PmsProductAttributeApi;
 import com.mall.api.admin.PmsProductAttributeCategoryApi;
-import com.mall.dto.PmsProductAttributeCategoryDto;
+import com.mall.api.admin.PmsProductCategoryAttributeRelationApi;
+import com.mall.vo.PmsProductAttributeCategoryVo;
 import com.mall.exception.ConsumerException;
 import com.mall.pojo.PmsProductAttribute;
 import com.mall.pojo.PmsProductAttributeCategory;
@@ -22,6 +23,9 @@ public class PmsProductAttributeCategoryService {
 
     @DubboReference
     private PmsProductAttributeApi pmsProductAttributeApi;
+
+    @DubboReference
+    private PmsProductCategoryAttributeRelationApi pmsProductCategoryAttributeRelationApi;
 
 
     /**
@@ -45,12 +49,13 @@ public class PmsProductAttributeCategoryService {
      * 2.获取所有商品属性分类及其下属性
      * @return
      */
-    public List<PmsProductAttributeCategoryDto> listWithAttr() {
+    public List<PmsProductAttributeCategoryVo> listWithAttr() {
         List<PmsProductAttributeCategory> categoryList = pmsProductAttributeCategoryApi.findAllProductAttributeCategory();
-        List<PmsProductAttributeCategoryDto> result = categoryList.stream().map(category -> {
-            PmsProductAttributeCategoryDto dto = new PmsProductAttributeCategoryDto();
+        List<PmsProductAttributeCategoryVo> result = categoryList.stream().map(category -> {
+            PmsProductAttributeCategoryVo dto = new PmsProductAttributeCategoryVo();
             BeanUtil.copyProperties(category,dto);
-            List<PmsProductAttribute> list = pmsProductAttributeApi.selectAllAttributeByCategoryId(category.getId());
+            List<Long> attributeIds = pmsProductCategoryAttributeRelationApi.selectAttributeId(Convert.toInt(category.getId()));
+            List<PmsProductAttribute> list = pmsProductAttributeApi.getMsgByAttributeIds(attributeIds);
             dto.setProductAttributeList(list);
             return dto;
         }).collect(Collectors.toList());

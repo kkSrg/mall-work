@@ -36,8 +36,8 @@ public class PmsBrandController {
      * @return
      */
     @PostMapping("/create")
-    public CommonResult<String> create(@RequestBody PmsBrand brand){
-        pmsBrandService.create(brand);
+    public CommonResult<String> create(@RequestBody PmsBrand pmsBrand){
+        pmsBrandService.create(pmsBrand);
         return CommonResult.success("品牌添加成功");
     }
 
