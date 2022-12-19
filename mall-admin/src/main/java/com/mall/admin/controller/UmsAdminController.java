@@ -8,12 +8,16 @@ import com.mall.dto.UmsAdminLoginParam;
 import com.mall.pojo.Admin;
 import com.mall.vo.AdminVo;
 import com.mall.vo.UmsInfoVo;
+import com.mall.vo.UmsRoleVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @CrossOrigin
 @RequestMapping("admin")
@@ -92,6 +96,70 @@ public class UmsAdminController {
             token = s[1];
         }
         return umsAdminService.getToken(token);
+    }
+
+    /**
+     * 获取指定用户的角色
+     *
+     * @param adminId
+     * @return
+     */
+    @GetMapping("/role/{adminId}")
+    public CommonResult getRoleById(@PathVariable Long adminId) {
+        List<UmsRoleVo> result = umsAdminService.getRoleById(adminId);
+        return CommonResult.success(result);
+    }
+
+    /**
+     * 修改帐号状态
+     *
+     * @param adminId
+     * @param status
+     * @return
+     */
+    @PostMapping("/updateStatus/{adminId}")
+    public CommonResult updateStatus(@PathVariable Long adminId, Integer status) {
+        umsAdminService.updateStatus(adminId, status);
+        return CommonResult.success("操作成功");
+    }
+
+    /**
+     * 给用户分配角色
+     *
+     * @param adminId
+     * @param roleIds
+     * @return
+     */
+    @PostMapping("/role/update")
+    public CommonResult update(Long adminId, @RequestParam Long[] roleIds) {
+        log.info("roleIds===" + roleIds);
+        umsAdminService.update(adminId, roleIds);
+        return CommonResult.success("操作成功");
+    }
+
+    /**
+     * 修改指定用户信息
+     *
+     * @param adminId
+     * @param adminVo
+     * @return
+     */
+    @PostMapping("/update/{adminId}")
+    public CommonResult update(@PathVariable Long adminId, @RequestBody AdminVo adminVo) {
+        umsAdminService.updateInfo(adminId, adminVo);
+        return CommonResult.success("操作成功");
+    }
+
+    /**
+     * 删除指定用户信息
+     *
+     * @param adminId
+     * @return
+     */
+    @PostMapping("/delete/{adminId}")
+    public CommonResult delete(@PathVariable Long adminId) {
+        umsAdminService.delete(adminId);
+        return CommonResult.success("操作成功");
     }
 
 }

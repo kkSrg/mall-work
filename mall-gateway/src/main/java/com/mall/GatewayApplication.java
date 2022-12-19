@@ -15,4 +15,5 @@ public class GatewayApplication {
     public RestTemplate restTemplate(){
         return new RestTemplate();
     }
+
 }

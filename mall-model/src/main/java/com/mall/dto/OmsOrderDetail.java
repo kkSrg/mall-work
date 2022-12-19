@@ -4,6 +4,8 @@ import com.mall.pojo.OmsOrder;
 import com.mall.pojo.OmsOrderItem;
 import com.mall.pojo.OmsOrderOperateHistory;
 import lombok.Data;
+
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -11,7 +13,7 @@ import java.util.List;
  * 订单详情信息
  */
 @Data
-public class OmsOrderDetail extends OmsOrder {
+public class OmsOrderDetail extends OmsOrder implements Serializable {
 
     private List<OmsOrderItem> orderItemList;//订单商品列表
 
