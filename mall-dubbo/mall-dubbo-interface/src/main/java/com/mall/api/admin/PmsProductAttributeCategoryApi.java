@@ -1,5 +1,6 @@
 package com.mall.api.admin;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.mall.pojo.PmsProductAttributeCategory;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public interface PmsProductAttributeCategoryApi {
     Integer selectCount();
 
     //获取所有商品属性分类
-    List<PmsProductAttributeCategory> findAllProductAttributeCategory();
+    IPage findAllProductAttributeCategory(Integer pageNum, Integer pageSize);
 
     //获取单个商品属性分类信息
     PmsProductAttributeCategory getMsgById(Long id);

@@ -19,8 +19,7 @@ public class PmsSkuStockApiImpl implements PmsSkuStockApi {
     @Override
     public List<PmsSkuStock> selectSku(Long pid, String keyword) {
         LambdaQueryWrapper<PmsSkuStock> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(null!=pid,PmsSkuStock::getProductId,pid);
-        queryWrapper.like(PmsSkuStock::getSkuCode,keyword);
+        queryWrapper.eq(null!=pid,PmsSkuStock::getProductId,pid).or().like(PmsSkuStock::getSkuCode,keyword);
         List<PmsSkuStock> pmsSkuStockList = pmsSkuStockMapper.selectList(queryWrapper);
         return pmsSkuStockList;
     }

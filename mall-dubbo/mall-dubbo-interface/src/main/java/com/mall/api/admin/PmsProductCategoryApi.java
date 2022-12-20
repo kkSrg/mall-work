@@ -1,5 +1,6 @@
 package com.mall.api.admin;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.mall.pojo.PmsProductCategory;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public interface PmsProductCategoryApi {
 
     List<PmsProductCategory> listWithChildren(long id);
 
-    List<PmsProductCategory> findByParentId(Integer parentId);
+    IPage<PmsProductCategory> findByParentId(Integer parentId, Integer pageNum, Integer pageSize);
 
     //根据id获取商品分类
     PmsProductCategory getMsgById(Long toLong);

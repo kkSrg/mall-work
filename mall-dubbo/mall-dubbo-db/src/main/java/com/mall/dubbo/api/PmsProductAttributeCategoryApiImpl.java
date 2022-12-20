@@ -1,6 +1,8 @@
 package com.mall.dubbo.api;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.api.admin.PmsProductAttributeCategoryApi;
 import com.mall.vo.PmsProductAttributeCategoryVo;
 import com.mall.dubbo.mapper.PmsProductAttributeCategoryMapper;
@@ -24,8 +26,9 @@ public class PmsProductAttributeCategoryApiImpl implements PmsProductAttributeCa
 
     //获取所有商品属性分类
     @Override
-    public List<PmsProductAttributeCategory> findAllProductAttributeCategory() {
-        return pmsProductAttributeCategoryMapper.selectList(null);
+    public IPage findAllProductAttributeCategory(Integer pageNum, Integer pageSize) {
+        IPage<PmsProductAttributeCategory> pg=new Page<>(pageNum,pageSize);
+        return pmsProductAttributeCategoryMapper.selectPage(pg,null);
     }
 
     //获取单个商品属性分类信息

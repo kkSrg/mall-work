@@ -2,6 +2,8 @@ package com.mall.dubbo.api;
 
 import cn.hutool.core.convert.Convert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.api.admin.PmsProductAttributeApi;
 import com.mall.dubbo.mapper.PmsProductAttributeMapper;
 import com.mall.pojo.PmsProductAttribute;
@@ -21,12 +23,13 @@ public class PmsProductAttributeApiImpl implements PmsProductAttributeApi {
 
     //根据分类查询属性列表或参数列表
     @Override
-    public List<PmsProductAttribute> selectByCidAndType(List<Long> attributeId, Integer type) {
+    public IPage<PmsProductAttribute> selectByCidAndType(Integer pageNum, Integer pageSize,List<Long> attributeIds, Integer type) {
+        IPage<PmsProductAttribute> pg = new Page<>(pageNum,pageSize);
         LambdaQueryWrapper<PmsProductAttribute> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.in(PmsProductAttribute::getId,attributeId);
+        queryWrapper.in(PmsProductAttribute::getId,attributeIds);
         queryWrapper.eq(PmsProductAttribute::getType,type);
-        List<PmsProductAttribute> attributeList = pmsProductAttributeMapper.selectList(queryWrapper);
-        return attributeList;
+        pmsProductAttributeMapper.selectPage(pg,queryWrapper);
+        return pg;
     }
 
     @Override
@@ -63,5 +66,13 @@ public class PmsProductAttributeApiImpl implements PmsProductAttributeApi {
         LambdaQueryWrapper<PmsProductAttribute> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(null!=id,PmsProductAttribute::getId,id);
         pmsProductAttributeMapper.update(attribute,queryWrapper);
+    }
+
+    @Override
+    public List<PmsProductAttribute> selectAttribute(List<Long> attributeIds, Integer type) {
+        LambdaQueryWrapper<PmsProductAttribute> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(PmsProductAttribute::getId,attributeIds);
+        queryWrapper.eq(null!=type,PmsProductAttribute::getType,type);
+        return pmsProductAttributeMapper.selectList(queryWrapper);
     }
 }

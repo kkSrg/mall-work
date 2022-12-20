@@ -2,6 +2,8 @@ package com.mall.dubbo.api;
 
 import cn.hutool.core.convert.Convert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.api.admin.PmsProductCategoryApi;
 import com.mall.dubbo.mapper.PmsProductCategoryMapper;
 import com.mall.pojo.PmsBrand;
@@ -20,11 +22,11 @@ public class PmsProductCategoryApiImpl implements PmsProductCategoryApi {
 
     //根据parentId查询数据
     @Override
-    public List<PmsProductCategory> findByParentId(Integer parentId) {
+    public IPage<PmsProductCategory> findByParentId(Integer parentId, Integer pageNum, Integer pageSize) {
+        IPage<PmsProductCategory> page = new Page<>(pageNum,pageSize);
         LambdaQueryWrapper<PmsProductCategory> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(null!=parentId,PmsProductCategory::getParentId, Convert.toLong(parentId));
-        List<PmsProductCategory> categoryList = pmsProductCategoryMapper.selectList(queryWrapper);
-        return categoryList;
+        return pmsProductCategoryMapper.selectPage(page, queryWrapper);
     }
 
     //根据id获取商品分类

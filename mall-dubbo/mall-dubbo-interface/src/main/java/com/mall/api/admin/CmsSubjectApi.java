@@ -9,4 +9,6 @@ public interface CmsSubjectApi {
     List<CmsSubject> list(String keyword, Integer pageSize, Integer pageNum);
 
     Integer finTotal(String keyword);
+
+    List<CmsSubject> listAll();
 }

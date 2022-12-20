@@ -28,4 +28,8 @@ public class CmsSubjectService {
         result.setTotalPage(totalPage);
         return result;
     }
+
+    public List<CmsSubject> listAll() {
+        return  cmsSubjectApi.listAll();
+    }
 }

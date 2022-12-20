@@ -30,7 +30,7 @@ public class PmsSkuStockController {
      * @return
      */
     @GetMapping("/{pid}")
-    public CommonResult<List<PmsSkuStock>> selectSku(@PathVariable Integer pid,@RequestParam String keyword){
+    public CommonResult<List<PmsSkuStock>> selectSku(@PathVariable Integer pid,String keyword){
         List<PmsSkuStock> result = pmsSkuStockService.selectSku(pid,keyword);
         return CommonResult.success(result);
     }

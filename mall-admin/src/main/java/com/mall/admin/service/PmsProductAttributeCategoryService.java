@@ -2,6 +2,7 @@ package com.mall.admin.service;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.convert.Convert;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.mall.CommonPage;
 import com.mall.api.admin.PmsProductAttributeApi;
 import com.mall.api.admin.PmsProductAttributeCategoryApi;
@@ -33,15 +34,13 @@ public class PmsProductAttributeCategoryService {
      * @return
      */
     public CommonPage<PmsProductAttributeCategory> list(Integer pageNum, Integer pageSize) {
+        IPage pg= pmsProductAttributeCategoryApi.findAllProductAttributeCategory(pageNum,pageSize);
         CommonPage<PmsProductAttributeCategory> result = new CommonPage<>();
         result.setPageNum(pageNum);
         result.setPageSize(pageSize);
-        Integer total = pmsProductAttributeCategoryApi.selectCount();
-        Integer totalPage = (int) (total / pageSize + ((total % pageSize == 0) ? 0 : 1));
-        result.setTotalPage(totalPage);
-        result.setTotal(total);
-        List<PmsProductAttributeCategory> list = pmsProductAttributeCategoryApi.findAllProductAttributeCategory();
-        result.setList(list);
+        result.setTotalPage(Convert.toInt(pg.getPages()));
+        result.setTotal(Convert.toInt(pg.getTotal()));
+        result.setList(pg.getRecords());
         return result;
     }
 
@@ -50,16 +49,16 @@ public class PmsProductAttributeCategoryService {
      * @return
      */
     public List<PmsProductAttributeCategoryVo> listWithAttr() {
-        List<PmsProductAttributeCategory> categoryList = pmsProductAttributeCategoryApi.findAllProductAttributeCategory();
+       /* List<PmsProductAttributeCategory> categoryList = pmsProductAttributeCategoryApi.findAllProductAttributeCategory();
         List<PmsProductAttributeCategoryVo> result = categoryList.stream().map(category -> {
             PmsProductAttributeCategoryVo dto = new PmsProductAttributeCategoryVo();
             BeanUtil.copyProperties(category,dto);
-            List<Long> attributeIds = pmsProductCategoryAttributeRelationApi.selectAttributeId(Convert.toInt(category.getId()));
+            List<Long> attributeIds = pmsProductCategoryAttributeRelationApi.selectAttributeIds(Convert.toInt(category.getId()));
             List<PmsProductAttribute> list = pmsProductAttributeApi.getMsgByAttributeIds(attributeIds);
             dto.setProductAttributeList(list);
             return dto;
-        }).collect(Collectors.toList());
-        return result;
+        }).collect(Collectors.toList());*/
+        return null;
     }
 
     /**

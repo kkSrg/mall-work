@@ -39,4 +39,9 @@ public class CmsSubjectApiImpl implements CmsSubjectApi {
         Integer count = cmsSubjectMapper.selectCount(queryWrapper);
         return count;
     }
+
+    @Override
+    public List<CmsSubject> listAll() {
+        return cmsSubjectMapper.selectList(null);
+    }
 }

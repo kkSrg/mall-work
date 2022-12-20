@@ -22,12 +22,27 @@ public class PmsProductAttributeController {
      * @return
      */
     @GetMapping("/list/{cid}")
-    public CommonResult<CommonPage<PmsProductAttribute>> list(@PathVariable Integer cid, @RequestParam Integer type,
-                                                              @RequestParam(value = "pageNum",required = false,defaultValue = "1") Integer pageNum,
-                                                              @RequestParam(value = "pageSize",required = false,defaultValue = "100") Integer pageSize){
-        CommonPage<PmsProductAttribute> result = pmsProductAttributeService.list(cid,type,pageNum,pageSize);
+    public CommonResult list(@PathVariable Integer cid, Integer type,
+                                                               Integer pageNum,
+                                                               Integer pageSize){
+        if (pageNum!=null && pageSize!=null){
+            CommonPage<PmsProductAttribute> result = pmsProductAttributeService.list(cid,type,pageNum,pageSize);
+            return CommonResult.success(result);
+        }
+        List<PmsProductAttribute> result = pmsProductAttributeService.listOther(cid,type);
         return CommonResult.success(result);
     }
+
+    /**
+     * 1.根据分类查询属性列表或参数列表
+     * @return
+     */
+    /*@GetMapping(value = "/list/{cid}",params = {"cid","type"})
+    public CommonResult<List<PmsProductAttribute>> listOther(@PathVariable Integer cid, Integer type){
+        List<PmsProductAttribute> result = pmsProductAttributeService.listOther(cid,type);
+        return CommonResult.success(result);
+    }*/
+
 
     /**
      * 2.根据商品分类的id获取商品属性及属性分类

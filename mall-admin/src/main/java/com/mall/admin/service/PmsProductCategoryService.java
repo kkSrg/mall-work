@@ -2,6 +2,7 @@ package com.mall.admin.service;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.convert.Convert;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.mall.CommonPage;
 import com.mall.api.admin.PmsProductCategoryApi;
 import com.mall.pojo.PmsProductCategory;
@@ -24,13 +25,13 @@ public class PmsProductCategoryService {
      * @return
      */
     public CommonPage<PmsProductCategory> list(Integer parentId, Integer pageNum, Integer pageSize) {
+        IPage<PmsProductCategory> page = pmsProductCategoryApi.findByParentId(parentId,pageNum,pageSize);
         CommonPage<PmsProductCategory> result = new CommonPage<>();
         result.setPageNum(pageNum);
         result.setPageSize(pageSize);
-        List<PmsProductCategory> list = pmsProductCategoryApi.findByParentId(parentId);
-        result.setList(list);
-        result.setTotal(list.size());
-        result.setTotalPage((int) (list.size() / pageSize + ((list.size() % pageSize == 0) ? 0 : 1)));
+        result.setTotal(Convert.toInt(page.getTotal()));
+        result.setTotalPage(Convert.toInt(page.getPages()));
+        result.setList(page.getRecords());
         return result;
     }
 
