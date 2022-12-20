@@ -9,7 +9,7 @@ public interface PmsProductAttributeApi {
 
 
     //根据分类查询属性列表或参数列表
-    IPage<PmsProductAttribute> selectByCidAndType(Integer pageNum, Integer pageSize,List<Long> attributeIds, Integer type);
+    IPage<PmsProductAttribute> selectByCidAndType(Integer pageNum, Integer pageSize,Long cid, Integer type);
 
     List<PmsProductAttribute> getMsgByAttributeIds(List<Long> attributeIds);
 
@@ -25,5 +25,5 @@ public interface PmsProductAttributeApi {
     void update(Long toLong, PmsProductAttribute attribute);
 
     //根据分类查询属性列表或参数列表
-    List<PmsProductAttribute> selectAttribute(List<Long> attributeIds, Integer type);
+    List<PmsProductAttribute> selectAttribute(Long cid, Integer type);
 }

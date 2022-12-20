@@ -27,8 +27,12 @@ public class PmsSkuStockService {
      * 2.根据商品id及sku编码模糊搜索sku库存
      * @return
      */
-    public List<PmsSkuStock> selectSku(Integer pid, String keyword) {
-        List<PmsSkuStock> list = pmsSkuStockApi.selectSku(Convert.toLong(pid),keyword);
+    public List<PmsSkuStock> selectSku(Integer pid) {
+        List<PmsSkuStock> list = pmsSkuStockApi.selectSku(Convert.toLong(pid));
         return list;
+    }
+
+    public List<PmsSkuStock> selectSkuList(Integer pid, String keyword) {
+        return pmsSkuStockApi.selectSkuList(Convert.toLong(pid),keyword);
     }
 }

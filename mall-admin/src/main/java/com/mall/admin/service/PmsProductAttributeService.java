@@ -28,22 +28,13 @@ public class PmsProductAttributeService {
 
     /**
      * 1.根据分类查询属性列表或参数列表
-     *
      * @return
      */
     public CommonPage<PmsProductAttribute> list(Integer cid, Integer type, Integer pageNum, Integer pageSize) {
-        List<Long> attributeIds = pmsProductCategoryAttributeRelationApi.selectAttributeIds(cid);
         CommonPage<PmsProductAttribute> result = new CommonPage<>();
         result.setPageNum(pageNum);
         result.setPageSize(pageSize);
-        if (CollUtil.isEmpty(attributeIds)) {
-            result.setTotalPage(0);
-            result.setTotal(0);
-            result.setList(new ArrayList<>());
-            return result;
-        }
-        IPage<PmsProductAttribute> iPage = pmsProductAttributeApi.selectByCidAndType(pageNum, pageSize, attributeIds, type);
-
+        IPage<PmsProductAttribute> iPage = pmsProductAttributeApi.selectByCidAndType(pageNum, pageSize, Convert.toLong(cid), type);
         result.setTotal(Convert.toInt(iPage.getTotal()));
         result.setTotalPage(Convert.toInt(iPage.getPages()));
         result.setList(iPage.getRecords());
@@ -52,18 +43,15 @@ public class PmsProductAttributeService {
 
     /**
      * 1.根据分类查询属性列表或参数列表
-     *
      * @return
      */
     public List<PmsProductAttribute> listOther(Integer cid, Integer type) {
-        List<Long> attributeIds = pmsProductCategoryAttributeRelationApi.selectAttributeIds(cid);
-        List<PmsProductAttribute> list = pmsProductAttributeApi.selectAttribute(attributeIds, type);
-        return list;
+        return pmsProductAttributeApi.selectAttribute(Convert.toLong(cid), type);
     }
+
 
     /**
      * 2.根据商品分类的id获取商品属性及属性分类
-     *
      * @return
      */
     public List<AttributeVo> attrInfo(Integer productCategoryId) {
@@ -82,7 +70,6 @@ public class PmsProductAttributeService {
 
     /**
      * 3.查询单个商品属性
-     *
      * @param id
      * @return
      */
@@ -93,7 +80,6 @@ public class PmsProductAttributeService {
 
     /**
      * 4.添加商品属性信息
-     *
      * @return
      */
     public void create(PmsProductAttribute attribute) {
@@ -102,7 +88,6 @@ public class PmsProductAttributeService {
 
     /**
      * 5.批量删除商品属性
-     *
      * @param ids
      * @return
      */
@@ -115,7 +100,6 @@ public class PmsProductAttributeService {
 
     /**
      * 6.修改商品属性信息
-     *
      * @param id
      * @param attribute
      * @return

@@ -22,9 +22,7 @@ public class PmsProductAttributeController {
      * @return
      */
     @GetMapping("/list/{cid}")
-    public CommonResult list(@PathVariable Integer cid, Integer type,
-                                                               Integer pageNum,
-                                                               Integer pageSize){
+    public CommonResult list(@PathVariable Integer cid, Integer type, Integer pageNum, Integer pageSize){
         if (pageNum!=null && pageSize!=null){
             CommonPage<PmsProductAttribute> result = pmsProductAttributeService.list(cid,type,pageNum,pageSize);
             return CommonResult.success(result);
@@ -32,16 +30,6 @@ public class PmsProductAttributeController {
         List<PmsProductAttribute> result = pmsProductAttributeService.listOther(cid,type);
         return CommonResult.success(result);
     }
-
-    /**
-     * 1.根据分类查询属性列表或参数列表
-     * @return
-     */
-    /*@GetMapping(value = "/list/{cid}",params = {"cid","type"})
-    public CommonResult<List<PmsProductAttribute>> listOther(@PathVariable Integer cid, Integer type){
-        List<PmsProductAttribute> result = pmsProductAttributeService.listOther(cid,type);
-        return CommonResult.success(result);
-    }*/
 
 
     /**

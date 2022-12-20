@@ -23,11 +23,11 @@ public class PmsProductAttributeApiImpl implements PmsProductAttributeApi {
 
     //根据分类查询属性列表或参数列表
     @Override
-    public IPage<PmsProductAttribute> selectByCidAndType(Integer pageNum, Integer pageSize,List<Long> attributeIds, Integer type) {
+    public IPage<PmsProductAttribute> selectByCidAndType(Integer pageNum, Integer pageSize,Long cid, Integer type) {
         IPage<PmsProductAttribute> pg = new Page<>(pageNum,pageSize);
         LambdaQueryWrapper<PmsProductAttribute> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.in(PmsProductAttribute::getId,attributeIds);
-        queryWrapper.eq(PmsProductAttribute::getType,type);
+        queryWrapper.eq(null!=cid,PmsProductAttribute::getProductAttributeCategoryId,cid);
+        queryWrapper.eq(null!=type,PmsProductAttribute::getType,type);
         pmsProductAttributeMapper.selectPage(pg,queryWrapper);
         return pg;
     }
@@ -69,9 +69,9 @@ public class PmsProductAttributeApiImpl implements PmsProductAttributeApi {
     }
 
     @Override
-    public List<PmsProductAttribute> selectAttribute(List<Long> attributeIds, Integer type) {
+    public List<PmsProductAttribute> selectAttribute(Long cid, Integer type) {
         LambdaQueryWrapper<PmsProductAttribute> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.in(PmsProductAttribute::getId,attributeIds);
+        queryWrapper.eq(null!=cid,PmsProductAttribute::getProductAttributeCategoryId,cid);
         queryWrapper.eq(null!=type,PmsProductAttribute::getType,type);
         return pmsProductAttributeMapper.selectList(queryWrapper);
     }

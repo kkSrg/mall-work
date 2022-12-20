@@ -31,7 +31,11 @@ public class PmsSkuStockController {
      */
     @GetMapping("/{pid}")
     public CommonResult<List<PmsSkuStock>> selectSku(@PathVariable Integer pid,String keyword){
-        List<PmsSkuStock> result = pmsSkuStockService.selectSku(pid,keyword);
+        if (keyword==null) {
+            List<PmsSkuStock> result = pmsSkuStockService.selectSku(pid);
+            return CommonResult.success(result);
+        }
+        List<PmsSkuStock> result = pmsSkuStockService.selectSkuList(pid,keyword);
         return CommonResult.success(result);
     }
 }
