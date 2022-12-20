@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.mall.pojo.PmsProduct;
 import com.mall.pojo.PmsProductCategory;
+import com.mall.pojo.SmsCouponProductCategoryRelation;
+import com.mall.pojo.SmsCouponProductRelation;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -104,11 +106,11 @@ public class SmsCouponDTO {
     /**
      * 优惠券绑定的商品分类
      */
-    private List<PmsProductCategory> productCategoryRelationList;
+    private List<SmsCouponProductCategoryRelation> productCategoryRelationList;
 
     /**
      * 优惠券绑定的商品
      */
-    private List<PmsProduct> productRelationList;
+    private List<SmsCouponProductRelation> productRelationList;
 
 }

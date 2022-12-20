@@ -90,7 +90,7 @@ public class SmsHomeNewProductService {
     public void saveList(List<SmsHomeNewProduct> homeNewProductList) {
         for (SmsHomeNewProduct smsHomeNewProduct : homeNewProductList) {
             //远程调用保存方法
-            smsHomeNewProductServiceApi.update(smsHomeNewProduct);
+            smsHomeNewProductServiceApi.insert(smsHomeNewProduct);
         }
     }
 }

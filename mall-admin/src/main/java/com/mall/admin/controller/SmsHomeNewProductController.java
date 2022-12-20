@@ -3,13 +3,11 @@ package com.mall.admin.controller;
 import com.mall.CommonPage;
 import com.mall.CommonResult;
 import com.mall.admin.service.SmsHomeNewProductService;
-import com.mall.dto.HomeNewProductListDTO;
 import com.mall.pojo.SmsHomeNewProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 首页新品
@@ -70,7 +68,7 @@ public class SmsHomeNewProductController {
      * @return
      */
     @PostMapping("/update/sort/{id}")
-    public CommonResult<Object> updateSort(@PathVariable Long id, @RequestBody Integer sort) {
+    public CommonResult<Object> updateSort(@PathVariable Long id, Integer sort) {
         smsHomeNewProductService.updateSort(id, sort);
         return CommonResult.success(null);
     }
@@ -82,8 +80,7 @@ public class SmsHomeNewProductController {
      * @date 2022/12/18 20:25
      */
     @PostMapping("/create")
-    public CommonResult<Object> save(@RequestBody HomeNewProductListDTO homeNewProductListDTO) {
-        List<SmsHomeNewProduct> homeNewProductList = homeNewProductListDTO.getHomeNewProductList();
+    public CommonResult<Object> save(@RequestBody List<SmsHomeNewProduct> homeNewProductList) {
         smsHomeNewProductService.saveList(homeNewProductList);
         return CommonResult.success(null);
     }

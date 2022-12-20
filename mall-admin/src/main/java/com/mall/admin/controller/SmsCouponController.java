@@ -43,16 +43,54 @@ public class SmsCouponController {
 
 
     /**
-     * 添加优惠券  todo 表关系没理清最后写
+     * 添加优惠券
      *
      * @param couponParam
      * @return
      */
     @PostMapping("/create")
     public CommonResult<Object> addSmsCoupon(@RequestBody SmsCouponDTO couponParam) {
+        smsCouponService.addSmsCoupon(couponParam);
+
+        return CommonResult.success(null);
+    }
+
+    /**
+     * 删除优惠券
+     */
+    @PostMapping("/delete/{id}")
+    public CommonResult<Object> deleteById(@PathVariable Long id) {
+        smsCouponService.deleteById(id);
+
+        return CommonResult.success(null);
+    }
 
 
-        return null;
+    /**
+     * 添加优惠券
+     *
+     * @param couponParam
+     * @return
+     */
+    @PostMapping("/update/{id}")
+    public CommonResult<Object> updateSmsCoupon(@RequestBody SmsCouponDTO couponParam) {
+        smsCouponService.updateSmsCoupon(couponParam);
+
+        return CommonResult.success(null);
+    }
+
+
+    /**
+     * 获取单个优惠券的详细信息
+     *
+     * @param
+     * @return
+     */
+    @GetMapping("/{id}")
+    public CommonResult<SmsCouponDTO> smsCouponById(@PathVariable Long id) {
+        SmsCouponDTO smsCouponDTO = smsCouponService.smsCouponById(id);
+
+        return CommonResult.success(smsCouponDTO);
     }
 
 
