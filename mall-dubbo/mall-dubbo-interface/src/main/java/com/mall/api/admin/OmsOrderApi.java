@@ -1,7 +1,7 @@
 package com.mall.api.admin;
 
-import cn.hutool.db.Page;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+
+import com.mall.CommonPage;
 import com.mall.dto.OmsOrderDeliveryParam;
 import com.mall.dto.OmsOrderDetail;
 import com.mall.dto.OmsOrderQueryParam;
@@ -12,11 +12,11 @@ import java.util.List;
 public interface OmsOrderApi {
 
 
-      int delivery(List<OmsOrderDeliveryParam> deliveryParamList);
+      void delivery(List<OmsOrderDeliveryParam> deliveryParamList);
 
 
 
-      List<OmsOrder> getList( OmsOrderQueryParam queryParam);
+      List<OmsOrder> getList(OmsOrderQueryParam queryParam, Integer pageNum, Integer pageSize, CommonPage<OmsOrder> result);
 
       int deleteByExampleSelective(OmsOrder record, List<Long> ids);
 
@@ -25,4 +25,7 @@ public interface OmsOrderApi {
       OmsOrderDetail gedetail(Long id);
 
       int updateByPrimaryKeySelective(OmsOrder order);
+
+
+      CommonPage<OmsOrder> getPage( OmsOrderQueryParam queryParam, Integer pageNum, Integer pageSize);
 }

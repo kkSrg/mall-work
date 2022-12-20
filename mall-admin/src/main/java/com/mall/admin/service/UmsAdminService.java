@@ -194,4 +194,9 @@ public class UmsAdminService {
         //再删admin和role关系表
         umsAdminRoleRelationApi.delete(adminId);
     }
+
+    //登出功能
+    public void logout() {
+        ThreadLocalUtil.close();
+    }
 }

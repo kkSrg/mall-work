@@ -15,14 +15,15 @@ public class OmsOrderReturnReasonService {
     @DubboReference
     private OrderReturnReasonApi orderReturnReasonApi;
     public CommonPage<OmsOrderReturnReason> getPage(Integer pageSize, Integer pageNum) {
-        CommonPage<OmsOrderReturnReason> result=new CommonPage<>();
+        /*CommonPage<OmsOrderReturnReason> result=new CommonPage<>();
         result.setTotalPage(1);
         result.setTotal(10);
         result.setPageNum(pageNum);
         result.setPageSize(pageSize);
         List<OmsOrderReturnReason> list=orderReturnReasonApi.getList();
         result.setList(list);
-        return result;
+        return result;*/
+        return orderReturnReasonApi.getPage(pageNum,pageSize);
     }
     /**
      * 添加退货原因
@@ -56,10 +57,8 @@ public class OmsOrderReturnReasonService {
         if(!status.equals(0)&&!status.equals(1)){
             return 0;
         }
-        OmsOrderReturnReason record = new OmsOrderReturnReason();
-        record.setStatus(status);
 
-        return orderReturnReasonApi.updateStatus(ids);
+        return orderReturnReasonApi.updateStatus(ids,status);
     }
 
     public int delete(List<Long> ids) {

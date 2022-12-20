@@ -8,4 +8,6 @@ public interface OrderOperateHistoryApi {
     void insertList(List<OmsOrderOperateHistory> operateHistoryList);
 
     void insert(OmsOrderOperateHistory history);
+
+    List<OmsOrderOperateHistory> findById(Long orderId);
 }

@@ -2,10 +2,11 @@ package com.mall;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
-public class CommonPage<T> {
+public class CommonPage<T> implements Serializable {
     private Integer pageNum;  //当前页码
     private Integer pageSize;  //页大小
     /**

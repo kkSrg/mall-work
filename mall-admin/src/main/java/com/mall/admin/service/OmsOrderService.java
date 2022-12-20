@@ -1,20 +1,21 @@
 package com.mall.admin.service;
 
+import cn.hutool.core.date.DateTime;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.mall.CommonPage;
 import com.mall.api.admin.OmsOrderApi;
+import com.mall.api.admin.OmsOrderItemApi;
 import com.mall.api.admin.OrderOperateHistoryApi;
-import com.mall.dto.OmsOrderDeliveryParam;
-import com.mall.dto.OmsOrderDetail;
-import com.mall.dto.OmsOrderQueryParam;
-import com.mall.dto.OmsReceiverInfoParam;
+import com.mall.dto.*;
 import com.mall.pojo.OmsOrder;
+import com.mall.pojo.OmsOrderItem;
 import com.mall.pojo.OmsOrderOperateHistory;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +24,8 @@ public class OmsOrderService {
     private OmsOrderApi omsOrderApi;
     @DubboReference
     private OrderOperateHistoryApi orderOperateHistoryApi;
+    @DubboReference
+    private OmsOrderItemApi omsOrderItemApi;
 
     /**
      * 查看订单
@@ -32,14 +35,13 @@ public class OmsOrderService {
      * @return
      */
     public CommonPage<OmsOrder> getPage(OmsOrderQueryParam queryParam, Integer pageSize, Integer pageNum) {
-        CommonPage<OmsOrder> result=new CommonPage<>();
-        result.setTotalPage(1);
-        result.setTotal(10);
+       /* CommonPage<OmsOrder> result=new CommonPage<>();
         result.setPageNum(pageNum);
         result.setPageSize(pageSize);
-        List<OmsOrder> list=omsOrderApi.getList(queryParam);
+        List<OmsOrder> list=omsOrderApi.getList(queryParam,pageNum,pageSize,result);
         result.setList(list);
-        return result;
+        return result;*/
+        return omsOrderApi.getPage(queryParam,pageNum,pageSize);
 
     }
     /**
@@ -47,10 +49,10 @@ public class OmsOrderService {
      * @param deliveryParamList
      * @return
      */
-    public int delivery(List<OmsOrderDeliveryParam> deliveryParamList) {
+    public void delivery(List<OmsOrderDeliveryParam> deliveryParamList) {
         //批量发货
-        int count = omsOrderApi.delivery(deliveryParamList);
-        List<OmsOrderOperateHistory> operateHistoryList = deliveryParamList.stream()
+        omsOrderApi.delivery(deliveryParamList);
+       /* List<OmsOrderOperateHistory> operateHistoryList = deliveryParamList.stream()
                 .map(omsOrderDeliveryParam -> {
                     OmsOrderOperateHistory history = new OmsOrderOperateHistory();
                     history.setOrderId(omsOrderDeliveryParam.getOrderId());
@@ -60,8 +62,15 @@ public class OmsOrderService {
                     history.setNote("完成发货");
                     return history;
                 }).collect(Collectors.toList());
-    orderOperateHistoryApi.insertList(operateHistoryList);
-        return count;
+    orderOperateHistoryApi.insertList(operateHistoryList);*/
+        /*OmsOrderOperateHistory omsOrderOperateHistory = new OmsOrderOperateHistory();
+        omsOrderOperateHistory.setOrderId(omsOrderDeliveryParam.getOrderId());
+        omsOrderOperateHistory.setOperateMan("后台管理员");
+        omsOrderOperateHistory.setCreateTime(DateTime.now());
+        omsOrderOperateHistory.setOrderStatus(2);
+        omsOrderOperateHistory.setNote("完成发货");
+        orderOperateHistoryApi.insert(omsOrderOperateHistory);*/
+
 
     }
     /**
@@ -74,7 +83,7 @@ public class OmsOrderService {
         OmsOrder record = new OmsOrder();
         record.setStatus(4);
         int count = omsOrderApi.updateDelivery(record, ids);
-        List<OmsOrderOperateHistory> historyList = ids.stream().map(orderId -> {
+       /* List<OmsOrderOperateHistory> historyList = ids.stream().map(orderId -> {
             OmsOrderOperateHistory history = new OmsOrderOperateHistory();
             history.setOrderId(orderId);
             history.setCreateTime(new Date());
@@ -83,7 +92,16 @@ public class OmsOrderService {
             history.setNote("订单关闭:"+note);
             return history;
         }).collect(Collectors.toList());
-        orderOperateHistoryApi.insertList(historyList);
+        orderOperateHistoryApi.insertList(historyList);*/
+        for (Long id : ids) {
+            OmsOrderOperateHistory omsOrderOperateHistory = new OmsOrderOperateHistory();
+            omsOrderOperateHistory.setOrderId(id);
+            omsOrderOperateHistory.setOperateMan("后台管理员");
+            omsOrderOperateHistory.setCreateTime(DateTime.now());
+            omsOrderOperateHistory.setOrderStatus(4);
+            omsOrderOperateHistory.setNote(note);
+            orderOperateHistoryApi.insert(omsOrderOperateHistory);
+        }
         return count;
     }
 
@@ -104,7 +122,14 @@ public class OmsOrderService {
      * @return
      */
     public OmsOrderDetail detail(Long id) {
-        return omsOrderApi.gedetail(id);
+
+        OmsOrderDetail gedetail = omsOrderApi.gedetail(id);
+        Long orderId = gedetail.getId();
+        List<OmsOrderOperateHistory> orderHistory = orderOperateHistoryApi.findById(orderId);
+        List<OmsOrderItem>  orderItem= omsOrderItemApi.findById(orderId);
+        gedetail.setHistoryList(orderHistory);
+        gedetail.setOrderItemList(orderItem);
+        return gedetail;
     }
     /**
      * 修改收货人信息
@@ -152,6 +177,25 @@ public class OmsOrderService {
         history.setOperateMan("后台管理员");
         history.setOrderStatus(status);
         history.setNote("修改备注信息："+note);
+        orderOperateHistoryApi.insert(history);
+        return count;
+    }
+
+
+    public int updateMoneyInfo(OmsMoneyInfoParam moneyInfoParam) {
+        OmsOrder order = new OmsOrder();
+        order.setId(moneyInfoParam.getOrderId());
+        order.setFreightAmount(moneyInfoParam.getFreightAmount());
+        order.setDiscountAmount(moneyInfoParam.getDiscountAmount());
+        order.setModifyTime(new Date());
+        int count = omsOrderApi.updateByPrimaryKeySelective(order);
+        //插入操作记录
+        OmsOrderOperateHistory history = new OmsOrderOperateHistory();
+        history.setOrderId(moneyInfoParam.getOrderId());
+        history.setCreateTime(new Date());
+        history.setOperateMan("后台管理员");
+        history.setOrderStatus(moneyInfoParam.getStatus());
+        history.setNote("修改费用信息");
         orderOperateHistoryApi.insert(history);
         return count;
     }

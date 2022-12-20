@@ -3,17 +3,13 @@ package com.mall.admin.controller;
 import com.mall.CommonPage;
 import com.mall.CommonResult;
 import com.mall.admin.service.OmsOrderService;
-import com.mall.dto.OmsOrderDeliveryParam;
-import com.mall.dto.OmsOrderDetail;
-import com.mall.dto.OmsOrderQueryParam;
-import com.mall.dto.OmsReceiverInfoParam;
+import com.mall.dto.*;
 import com.mall.pojo.OmsOrder;
-import com.mall.pojo.SmsFlashPromotion;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/order")
@@ -42,11 +38,8 @@ public class OmsOrderController {
      */
     @PostMapping(value = "/update/delivery")
     public CommonResult delivery(@RequestBody List<OmsOrderDeliveryParam> deliveryParamList) {
-        int count = orderService.delivery(deliveryParamList);
-        if (count > 0) {
-            return CommonResult.success(count);
-        }
-        return CommonResult.error("失败");
+        orderService.delivery(deliveryParamList);
+        return CommonResult.success(1);
     }
 
     /**
@@ -122,5 +115,18 @@ public class OmsOrderController {
     }
 
 
+    /**
+     *修改订单费用信息
+     * @param moneyInfoParam
+     * @return
+     */
+ @PostMapping("/update/moneyInfo")
+    public CommonResult updateReceiverInfo(@RequestBody OmsMoneyInfoParam moneyInfoParam) {
+        int count = orderService.updateMoneyInfo(moneyInfoParam);
+        if (count > 0) {
+            return CommonResult.success(count);
+        }
+        return CommonResult.error("修改失败");
+    }
 
 }
