@@ -134,4 +134,9 @@ public class PmsProductApiImpl implements PmsProductApi {
             pmsProductMapper.update(pmsProduct,queryWrapper1);
         }
     }
+
+    @Override
+    public PmsProduct selectById(Long productId) {
+        return pmsProductMapper.selectById(productId);
+    }
 }
