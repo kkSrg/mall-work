@@ -52,7 +52,7 @@ public class OmsOrderService {
     public void delivery(List<OmsOrderDeliveryParam> deliveryParamList) {
         //批量发货
         omsOrderApi.delivery(deliveryParamList);
-       /* List<OmsOrderOperateHistory> operateHistoryList = deliveryParamList.stream()
+      List<OmsOrderOperateHistory> operateHistoryList = deliveryParamList.stream()
                 .map(omsOrderDeliveryParam -> {
                     OmsOrderOperateHistory history = new OmsOrderOperateHistory();
                     history.setOrderId(omsOrderDeliveryParam.getOrderId());
@@ -62,7 +62,7 @@ public class OmsOrderService {
                     history.setNote("完成发货");
                     return history;
                 }).collect(Collectors.toList());
-    orderOperateHistoryApi.insertList(operateHistoryList);*/
+    orderOperateHistoryApi.insertList(operateHistoryList);
         /*OmsOrderOperateHistory omsOrderOperateHistory = new OmsOrderOperateHistory();
         omsOrderOperateHistory.setOrderId(omsOrderDeliveryParam.getOrderId());
         omsOrderOperateHistory.setOperateMan("后台管理员");

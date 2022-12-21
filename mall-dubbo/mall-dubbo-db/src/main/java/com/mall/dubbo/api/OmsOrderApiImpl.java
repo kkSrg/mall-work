@@ -2,7 +2,6 @@ package com.mall.dubbo.api;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.convert.Convert;
-import cn.hutool.core.date.DateTime;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -14,7 +13,6 @@ import com.mall.dto.OmsOrderQueryParam;
 import com.mall.dubbo.mapper.OmsOrderMapper;
 import com.mall.dubbo.mapper.OrderOperateHistoryMapper;
 import com.mall.pojo.OmsOrder;
-import com.mall.pojo.OmsOrderOperateHistory;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -42,13 +40,13 @@ public class OmsOrderApiImpl implements OmsOrderApi {
             wrapper.eq(OmsOrder::getId,orderDeliveryParam.getOrderId());
             omsOrderMapper.update(omsOrder, wrapper);
 
-            OmsOrderOperateHistory history = new OmsOrderOperateHistory();
+            /*OmsOrderOperateHistory history = new OmsOrderOperateHistory();
             history.setOrderId(orderDeliveryParam.getOrderId());
             history.setOperateMan("后台管理员");
             history.setCreateTime(DateTime.now());
             history.setOrderStatus(2);
             history.setNote("已发货");
-            orderOperateHistoryMapper.insert(history);
+            orderOperateHistoryMapper.insert(history);*/
         }
     }
 
@@ -88,8 +86,8 @@ public class OmsOrderApiImpl implements OmsOrderApi {
         CommonPage<OmsOrder> pageResult = new CommonPage<>();
         pageResult.setPageNum(pageNum);
         pageResult.setPageSize(pageSize);
-        pageResult.setTotalPage((int)page.getPages());
-        pageResult.setTotal((int)page.getTotal());
+        pageResult.setTotalPage(Convert.toInt(page.getPages()));
+        pageResult.setTotal(Convert.toInt(page.getTotal()));
         pageResult.setList(page.getRecords());
         return pageResult;
     }

@@ -26,7 +26,7 @@ public class OmsOrderController {
      */
     @GetMapping("/list")
     public CommonResult<CommonPage<OmsOrder>> list(OmsOrderQueryParam queryParam, @RequestParam(value = "pageNum",required = false,defaultValue = "1") Integer pageNum,
-                                                     @RequestParam(value = "pageSzie",required = false,defaultValue = "10")Integer pageSize){
+                                                     @RequestParam(value = "pageSize",required = false,defaultValue = "5")Integer pageSize){
         CommonPage<OmsOrder> page = orderService.getPage(queryParam, pageSize, pageNum);
         return CommonResult.success(page);
     }

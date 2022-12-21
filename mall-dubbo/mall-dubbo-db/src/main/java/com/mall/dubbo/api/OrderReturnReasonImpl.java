@@ -1,12 +1,15 @@
 package com.mall.dubbo.api;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.CommonPage;
 import com.mall.api.admin.OrderReturnReasonApi;
 import com.mall.dubbo.mapper.OrderReturnReasonMapper;
+import com.mall.pojo.OmsOrder;
 import com.mall.pojo.OmsOrderReturnReason;
+import com.mall.pojo.PmsProduct;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,9 +24,11 @@ public class OrderReturnReasonImpl implements OrderReturnReasonApi {
     }
     @Override
     public CommonPage<OmsOrderReturnReason> getPage(Integer pageNum, Integer pageSize) {
+        LambdaQueryWrapper<OmsOrderReturnReason> wrapper=new LambdaQueryWrapper<>();
+        wrapper.orderByDesc(OmsOrderReturnReason::getSort);
         CommonPage<OmsOrderReturnReason> pageResult = new CommonPage<>();
         IPage<OmsOrderReturnReason> page = new Page<>(pageNum,pageSize);
-        orderReturnReasonMapper.selectPage(page,null);
+        orderReturnReasonMapper.selectPage(page,wrapper);
 
         pageResult.setPageNum(pageNum);
         pageResult.setPageSize(pageSize);
