@@ -1,5 +1,7 @@
 package com.mall.dubbo.api;
 
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.mall.api.admin.PmsSkuStockApi;
 import com.mall.dubbo.mapper.PmsSkuStockMapper;
@@ -17,11 +19,10 @@ public class PmsSkuStockApiImpl implements PmsSkuStockApi {
 
     //根据商品id及sku编码模糊搜索sku库存
     @Override
-    public List<PmsSkuStock> selectSku(Long pid, String keyword) {
+    public List<PmsSkuStock> selectSku(Long pid) {
         LambdaQueryWrapper<PmsSkuStock> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(null!=pid,PmsSkuStock::getProductId,pid).or().like(PmsSkuStock::getSkuCode,keyword);
-        List<PmsSkuStock> pmsSkuStockList = pmsSkuStockMapper.selectList(queryWrapper);
-        return pmsSkuStockList;
+        queryWrapper.eq(null!=pid,PmsSkuStock::getProductId,pid);
+        return pmsSkuStockMapper.selectList(queryWrapper);
     }
 
 
@@ -31,8 +32,9 @@ public class PmsSkuStockApiImpl implements PmsSkuStockApi {
         LambdaQueryWrapper<PmsSkuStock> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(null!=pid,PmsSkuStock::getProductId,pid);
         int count = 0;
+        pmsSkuStockMapper.delete(queryWrapper);
         for (PmsSkuStock pmsSkuStock : skuStockList) {
-            count = pmsSkuStockMapper.update(pmsSkuStock, queryWrapper);
+            pmsSkuStockMapper.insert(pmsSkuStock);
             count++;
         }
         return count;
@@ -60,5 +62,13 @@ public class PmsSkuStockApiImpl implements PmsSkuStockApi {
         for (PmsSkuStock pmsSkuStock : skuStockList) {
             pmsSkuStockMapper.insert(pmsSkuStock);
         }
+    }
+
+    @Override
+    public List<PmsSkuStock> selectSkuList(Long pid, String keyword) {
+        LambdaQueryWrapper<PmsSkuStock> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(PmsSkuStock::getProductId,pid);
+        queryWrapper.like(PmsSkuStock::getSkuCode,keyword);
+        return pmsSkuStockMapper.selectList(queryWrapper);
     }
 }

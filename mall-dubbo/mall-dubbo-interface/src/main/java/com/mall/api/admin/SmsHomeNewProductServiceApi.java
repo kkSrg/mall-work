@@ -29,8 +29,10 @@ public interface SmsHomeNewProductServiceApi {
     void updates(Integer recommendStatus, int[] ids);
 
     /**
-     * 保存或者修改新品
+     * 修改新品
      */
     void update(SmsHomeNewProduct smsHomeNewProduct);
+
+    void insert(SmsHomeNewProduct smsHomeNewProduct);
 
 }

@@ -7,7 +7,7 @@ import java.util.List;
 public interface PmsSkuStockApi {
 
     //根据商品id及sku编码模糊搜索sku库存
-    List<PmsSkuStock> selectSku(Long pid, String keyword);
+    List<PmsSkuStock> selectSku(Long pid);
 
     //批量更新库存信息
     Integer updateByPid(Long toLong, List<PmsSkuStock> skuStockList);
@@ -18,4 +18,6 @@ public interface PmsSkuStockApi {
     void insert(List<PmsSkuStock> skuStockList);
 
     void update(Long id, List<PmsSkuStock> skuStockList);
+
+    List<PmsSkuStock> selectSkuList(Long toLong, String keyword);
 }

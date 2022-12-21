@@ -47,12 +47,14 @@ public class SmsHomeBrandController {
     /**
      * 添加首页推荐品牌
      *
-     * @param smsHomeBrand
+     * @param
      * @return
      */
     @PostMapping("/create")
-    public CommonResult<Object> addSmsHomeBrand(@RequestBody SmsHomeBrand smsHomeBrand) {
-        smsHomeBrandService.addSmsHomeBrand(smsHomeBrand);
+    public CommonResult<Object> addSmsHomeBrand(@RequestBody List<SmsHomeBrand> smsHomeBrands) {
+        for (SmsHomeBrand smsHomeBrand : smsHomeBrands) {
+            smsHomeBrandService.addSmsHomeBrand(smsHomeBrand);
+        }
         return CommonResult.success(null);
     }
 

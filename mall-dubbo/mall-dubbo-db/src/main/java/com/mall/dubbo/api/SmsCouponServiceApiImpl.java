@@ -24,6 +24,9 @@ public class SmsCouponServiceApiImpl implements SmsCouponServiceApi {
     @Autowired
     private SmsCouponMapper smsCouponMapper;
 
+    /**
+     * 分页
+     */
     @Override
     public Page<SmsCoupon> getPage(Integer pageNum, Integer pageSize,String name, Integer type) {
         Page<SmsCoupon> page = new Page<>(pageNum,pageSize);
@@ -43,5 +46,34 @@ public class SmsCouponServiceApiImpl implements SmsCouponServiceApi {
             smsCouponPage = smsCouponMapper.selectPage(page,null);
         }
         return smsCouponPage;
+    }
+
+    /**
+     * 保存
+     */
+    @Override
+    public void save(SmsCoupon smsCoupon) {
+        smsCouponMapper.insert(smsCoupon);
+    }
+
+    /**
+     * 删除
+     */
+    @Override
+    public void deleteById(Long id) {
+        smsCouponMapper.deleteById(id);
+    }
+
+    /**
+     * 修改
+     */
+    @Override
+    public void update(SmsCoupon smsCoupon) {
+        smsCouponMapper.updateById(smsCoupon);
+    }
+
+    @Override
+    public SmsCoupon selectById(Long id) {
+        return smsCouponMapper.selectById(id);
     }
 }
