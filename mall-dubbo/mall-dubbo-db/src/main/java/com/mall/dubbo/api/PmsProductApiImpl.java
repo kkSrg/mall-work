@@ -40,8 +40,7 @@ public class PmsProductApiImpl implements PmsProductApi {
     @Override
     public List<PmsProduct> simpleList(String keyword) {
         LambdaQueryWrapper<PmsProduct> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.like(PmsProduct::getName,keyword);
-        queryWrapper.like(PmsProduct::getProductSn,keyword);
+        queryWrapper.like(keyword!=null,PmsProduct::getName,keyword).or().like(keyword!=null,PmsProduct::getProductSn,keyword);
         List<PmsProduct> pmsProducts = pmsProductMapper.selectList(queryWrapper);
         return pmsProducts;
     }
@@ -129,5 +128,10 @@ public class PmsProductApiImpl implements PmsProductApi {
             queryWrapper1.eq(PmsProduct::getId,pmsProduct.getId());
             pmsProductMapper.update(pmsProduct,queryWrapper1);
         }
+    }
+
+    @Override
+    public PmsProduct selectById(Long productId) {
+        return pmsProductMapper.selectById(productId);
     }
 }

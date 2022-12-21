@@ -33,4 +33,6 @@ public interface PmsProductApi {
 
     //批量修改审核状态
     void verifyStatus(String detail, List<Long> idList, Integer verifyStatus);
+
+    PmsProduct selectById(Long productId);
 }

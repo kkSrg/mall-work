@@ -2,6 +2,7 @@ package com.mall.admin.controller;
 
 import com.mall.CommonResult;
 import com.mall.admin.service.UmsResourceCategoryService;
+import com.mall.enums.DataNum;
 import com.mall.pojo.UmsResource;
 import com.mall.pojo.UmsResourceCategory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,6 @@ public class UmsResourceCategoryController {
     @PostMapping("update/{id}")
     public CommonResult update(@PathVariable Integer id,@RequestBody UmsResourceCategory umsResourceCategory){
         umsResourceCategoryService.update(id,umsResourceCategory);
-        return CommonResult.success(1);
+        return CommonResult.success(DataNum.DATA_NUM);
     }
 }

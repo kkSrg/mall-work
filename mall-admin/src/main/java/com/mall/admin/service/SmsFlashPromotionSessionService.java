@@ -52,4 +52,9 @@ public class SmsFlashPromotionSessionService {
     public void updateStatus(SmsFlashPromotionSession smsFlashPromotionSession) {
         smsFlashPromotionSessionServiceApi.updateStatus(smsFlashPromotionSession);
     }
+
+    public List<SmsFlashPromotionSession> selectList(Integer flashPromotionId) {
+       return smsFlashPromotionSessionServiceApi.selectList(flashPromotionId);
+
+    }
 }

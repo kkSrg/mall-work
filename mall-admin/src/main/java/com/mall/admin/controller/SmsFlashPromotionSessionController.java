@@ -82,4 +82,17 @@ public class SmsFlashPromotionSessionController {
         return CommonResult.success(null);
     }
 
+
+    /**
+     * 获取全部可选场次及其数量
+     * @return
+     */
+    @GetMapping("/selectList")
+    private CommonResult<List<SmsFlashPromotionSession>> selectList(Integer flashPromotionId){
+        List<SmsFlashPromotionSession> list = smsFlashPromotionSessionService.selectList(flashPromotionId);
+        return CommonResult.success(list);
+    }
+
+
+
 }

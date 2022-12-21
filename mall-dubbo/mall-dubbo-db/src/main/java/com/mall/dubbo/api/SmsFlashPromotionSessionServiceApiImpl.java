@@ -1,5 +1,7 @@
 package com.mall.dubbo.api;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.mall.api.admin.SmsFlashPromotionSessionServiceApi;
 import com.mall.dubbo.mapper.SmsFlashPromotionSessionMapper;
 import com.mall.pojo.SmsFlashPromotionSession;
@@ -46,5 +48,14 @@ public class SmsFlashPromotionSessionServiceApiImpl implements SmsFlashPromotion
     @Override
     public void updateStatus(SmsFlashPromotionSession smsFlashPromotionSession) {
         smsFlashPromotionSessionMapper.updateById(smsFlashPromotionSession);
+    }
+
+    @Override
+    public List<SmsFlashPromotionSession> selectList(Integer flashPromotionId) {
+
+        LambdaQueryWrapper<SmsFlashPromotionSession> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SmsFlashPromotionSession::getId,flashPromotionId);
+        return smsFlashPromotionSessionMapper.selectList(wrapper);
+
     }
 }

@@ -37,6 +37,7 @@ public class SmsHomeNewProductServiceApiImpl implements SmsHomeNewProductService
         //设置条件
         wrapper.like(productName != null, SmsHomeNewProduct::getProductName, productName);
         wrapper.like(recommendStatus != null, SmsHomeNewProduct::getRecommendStatus, recommendStatus);
+        wrapper.orderByDesc(SmsHomeNewProduct::getSort);
         //查询分页
         smsHomeNewProductMapper.selectPage(page, wrapper);
         //返回
@@ -75,5 +76,10 @@ public class SmsHomeNewProductServiceApiImpl implements SmsHomeNewProductService
     public void update(SmsHomeNewProduct smsHomeNewProduct) {
         //调用持久层修改
         smsHomeNewProductMapper.updateById(smsHomeNewProduct);
+    }
+
+    @Override
+    public void insert(SmsHomeNewProduct smsHomeNewProduct) {
+        smsHomeNewProductMapper.insert(smsHomeNewProduct);
     }
 }

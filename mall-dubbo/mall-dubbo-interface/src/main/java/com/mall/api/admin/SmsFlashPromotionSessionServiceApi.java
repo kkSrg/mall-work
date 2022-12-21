@@ -24,4 +24,7 @@ public interface SmsFlashPromotionSessionServiceApi {
      * 修改
      */
     void updateStatus(SmsFlashPromotionSession smsFlashPromotionSession);
+
+
+    List<SmsFlashPromotionSession> selectList(Integer flashPromotionId);
 }
