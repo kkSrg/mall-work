@@ -33,6 +33,14 @@ public class PmsProductAttributeApiImpl implements PmsProductAttributeApi {
     }
 
     @Override
+    public List<PmsProductAttribute> selectAttribute(Long cid, Integer type) {
+        LambdaQueryWrapper<PmsProductAttribute> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(null!=cid,PmsProductAttribute::getProductAttributeCategoryId,cid);
+        queryWrapper.eq(null!=type,PmsProductAttribute::getType,type);
+        return pmsProductAttributeMapper.selectList(queryWrapper);
+    }
+
+    @Override
     public List<PmsProductAttribute> getMsgByAttributeIds(List<Long> attributeIds) {
         List<PmsProductAttribute> list = attributeIds.stream().map(attributeId->{
             return pmsProductAttributeMapper.selectById(attributeId);
@@ -68,11 +76,5 @@ public class PmsProductAttributeApiImpl implements PmsProductAttributeApi {
         pmsProductAttributeMapper.update(attribute,queryWrapper);
     }
 
-    @Override
-    public List<PmsProductAttribute> selectAttribute(Long cid, Integer type) {
-        LambdaQueryWrapper<PmsProductAttribute> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(null!=cid,PmsProductAttribute::getProductAttributeCategoryId,cid);
-        queryWrapper.eq(null!=type,PmsProductAttribute::getType,type);
-        return pmsProductAttributeMapper.selectList(queryWrapper);
-    }
+
 }

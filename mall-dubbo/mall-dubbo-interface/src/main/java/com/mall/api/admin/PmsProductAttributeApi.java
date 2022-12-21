@@ -11,6 +11,9 @@ public interface PmsProductAttributeApi {
     //根据分类查询属性列表或参数列表
     IPage<PmsProductAttribute> selectByCidAndType(Integer pageNum, Integer pageSize,Long cid, Integer type);
 
+    //根据分类查询属性列表或参数列表
+    List<PmsProductAttribute> selectAttribute(Long cid, Integer type);
+
     List<PmsProductAttribute> getMsgByAttributeIds(List<Long> attributeIds);
 
     PmsProductAttribute getMsgByAttributeId(Long attributeId);
@@ -24,6 +27,5 @@ public interface PmsProductAttributeApi {
     //修改商品属性信息
     void update(Long toLong, PmsProductAttribute attribute);
 
-    //根据分类查询属性列表或参数列表
-    List<PmsProductAttribute> selectAttribute(Long cid, Integer type);
+
 }

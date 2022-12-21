@@ -71,13 +71,8 @@ public class PmsProductApiImpl implements PmsProductApi {
     public void deleteStatus(List<Long> idList,Integer deleteStatus) {
         LambdaQueryWrapper<PmsProduct> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.in(PmsProduct::getId,idList);
-        List<PmsProduct> productList = pmsProductMapper.selectList(queryWrapper);
-        for (PmsProduct pmsProduct : productList) {
-            pmsProduct.setDeleteStatus(deleteStatus);
-            LambdaQueryWrapper<PmsProduct> queryWrapper1 = new LambdaQueryWrapper<>();
-            queryWrapper1.eq(PmsProduct::getId,pmsProduct.getId());
-            pmsProductMapper.update(pmsProduct,queryWrapper1);
-        }
+        pmsProductMapper.delete(queryWrapper);
+
     }
 
     @Override
