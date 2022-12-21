@@ -57,6 +57,9 @@ public class PmsProductAttributeService {
      */
     public List<PmsProductAttribute> listOther(Integer cid, Integer type) {
         List<Long> attributeIds = pmsProductCategoryAttributeRelationApi.selectAttributeIds(cid);
+        if(CollUtil.isEmpty(attributeIds)){
+            return new ArrayList<>();
+        }
         List<PmsProductAttribute> list = pmsProductAttributeApi.selectAttribute(attributeIds, type);
         return list;
     }
