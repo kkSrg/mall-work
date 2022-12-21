@@ -26,24 +26,17 @@ public class PmsProductAttributeService {
     @DubboReference
     private PmsProductCategoryAttributeRelationApi pmsProductCategoryAttributeRelationApi;
 
+
+
     /**
      * 1.根据分类查询属性列表或参数列表
-     *
      * @return
      */
     public CommonPage<PmsProductAttribute> list(Integer cid, Integer type, Integer pageNum, Integer pageSize) {
-        List<Long> attributeIds = pmsProductCategoryAttributeRelationApi.selectAttributeIds(cid);
         CommonPage<PmsProductAttribute> result = new CommonPage<>();
         result.setPageNum(pageNum);
         result.setPageSize(pageSize);
-        if (CollUtil.isEmpty(attributeIds)) {
-            result.setTotalPage(0);
-            result.setTotal(0);
-            result.setList(new ArrayList<>());
-            return result;
-        }
-        IPage<PmsProductAttribute> iPage = pmsProductAttributeApi.selectByCidAndType(pageNum, pageSize, attributeIds, type);
-
+        IPage<PmsProductAttribute> iPage = pmsProductAttributeApi.selectByCidAndType(pageNum, pageSize, Convert.toLong(cid), type);
         result.setTotal(Convert.toInt(iPage.getTotal()));
         result.setTotalPage(Convert.toInt(iPage.getPages()));
         result.setList(iPage.getRecords());
@@ -56,12 +49,7 @@ public class PmsProductAttributeService {
      * @return
      */
     public List<PmsProductAttribute> listOther(Integer cid, Integer type) {
-        List<Long> attributeIds = pmsProductCategoryAttributeRelationApi.selectAttributeIds(cid);
-        if(CollUtil.isEmpty(attributeIds)){
-            return new ArrayList<>();
-        }
-        List<PmsProductAttribute> list = pmsProductAttributeApi.selectAttribute(attributeIds, type);
-        return list;
+        return pmsProductAttributeApi.selectAttribute(Convert.toLong(cid), type);
     }
 
     /**
