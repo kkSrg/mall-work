@@ -24,4 +24,6 @@ public interface UmsAdminApi {
 
     //删除指定用户信息
     void delete(Long adminId);
+
+    Admin findPwById(Long adminId);
 }

@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.StrUtil;
 import com.mall.CommonPage;
 import com.mall.api.admin.UmsAdminApi;
 import com.mall.api.admin.UmsAdminRoleRelationApi;
@@ -178,7 +179,19 @@ public class UmsAdminService {
     //修改指定用户信息
     public void updateInfo(Long adminId, AdminVo adminVo) {
         Admin admin = new Admin();
+
+
+        //查找数据库保存的密码
+        Admin admin1 = umsAdminApi.findPwById(adminId);
+
+        //修改的密码如果和数据库一样,不需要加密,如果不一样,进行加密
+        if (!StrUtil.equals(adminVo.getPassword(),admin1.getPassword())){
+            String password = DigestUtils.md5DigestAsHex(adminVo.getPassword().getBytes());
+            adminVo.setPassword(password);
+        }
+
         BeanUtils.copyProperties(adminVo, admin);
+
         try {
             admin.setCreateTime(adminVo.getCreateTime() != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(adminVo.getCreateTime()) : null);
             admin.setLoginTime(adminVo.getLoginTime() != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(adminVo.getLoginTime()) : null);

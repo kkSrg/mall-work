@@ -69,6 +69,13 @@ public class UmsAdminApiImpl implements UmsAdminApi {
     }
 
     @Override
+    public Admin findPwById(Long adminId) {
+        LambdaQueryWrapper<Admin> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Admin::getId,adminId);
+        return umsAdminMapper.selectOne(wrapper);
+    }
+
+    @Override
     public List<Admin> findAll(String keyword, Integer page, Integer pagesize) {
         //创建分页对象，设置分页参数
         //注意：使用分页，需要配置分页插件
