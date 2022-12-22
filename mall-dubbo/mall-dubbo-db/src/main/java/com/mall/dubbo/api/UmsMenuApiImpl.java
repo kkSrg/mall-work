@@ -31,6 +31,7 @@ public class UmsMenuApiImpl implements UmsMenuApi {
         IPage<UmsMenu> pg = new Page<>(page, pagesize);
         LambdaQueryWrapper<UmsMenu> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(UmsMenu::getParentId,parentId);
+        wrapper.orderByDesc(UmsMenu::getSort);
         umsMenuMapper.selectPage(pg,wrapper);
         return pg;
     }
